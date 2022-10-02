@@ -1,0 +1,17 @@
+{
+	"name": "Patika Bear #20",
+	"description": "Patika Bear #20",
+	"attributes": [
+		{ "trait_type": "Background", "value": "Red" },
+		{ "trait_type": "Fur", "value": "Red" },
+		{ "trait_type": "Eyes", "value": "Proud" },
+		{ "trait_type": "Mouth", "value": "Thinking" },
+		{ "trait_type": "Clothes", "value": "None" }
+	],
+	"creators": [],
+	"collection": { "name": "Patika Bears", "family": "Bears" },
+	"symbol": "PBEAR",
+	"seller_fee_basis_points": 0,
+	"image": "ipfs://QmbWQXeFYfp7ozLq9V7N5X72tEFvFXHVbzfntTnNaXWkU6/20.png",
+	"compiler": "Genfty.com"
+}

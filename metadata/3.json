@@ -1,0 +1,17 @@
+{
+	"name": "Patika Bear #3",
+	"description": "Patika Bear #3",
+	"attributes": [
+		{ "trait_type": "Background", "value": "Purple" },
+		{ "trait_type": "Fur", "value": "Red" },
+		{ "trait_type": "Eyes", "value": "Happy" },
+		{ "trait_type": "Mouth", "value": "Thinking" },
+		{ "trait_type": "Clothes", "value": "Shirt" }
+	],
+	"creators": [],
+	"collection": { "name": "Patika Bears", "family": "Bears" },
+	"symbol": "PBEAR",
+	"seller_fee_basis_points": 0,
+	"image": "ipfs://QmbWQXeFYfp7ozLq9V7N5X72tEFvFXHVbzfntTnNaXWkU6/3.png",
+	"compiler": "Genfty.com"
+}

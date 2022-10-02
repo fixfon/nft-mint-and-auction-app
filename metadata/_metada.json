@@ -1,0 +1,342 @@
+[
+	{
+		"name": "Patika Bear #1",
+		"description": "Patika Bear #1",
+		"attributes": [
+			{ "trait_type": "Background", "value": "Green" },
+			{ "trait_type": "Fur", "value": "Gray" },
+			{ "trait_type": "Eyes", "value": "Open" },
+			{ "trait_type": "Mouth", "value": "Sad" },
+			{ "trait_type": "Clothes", "value": "Coat" }
+		],
+		"creators": [],
+		"collection": { "name": "Patika Bears", "family": "Bears" },
+		"symbol": "PBEAR",
+		"seller_fee_basis_points": 0,
+		"image": "ipfs://QmbWQXeFYfp7ozLq9V7N5X72tEFvFXHVbzfntTnNaXWkU6/1.png",
+		"compiler": "Genfty.com"
+	},
+	{
+		"name": "Patika Bear #2",
+		"description": "Patika Bear #2",
+		"attributes": [
+			{ "trait_type": "Background", "value": "Purple" },
+			{ "trait_type": "Fur", "value": "Purple" },
+			{ "trait_type": "Eyes", "value": "Angry" },
+			{ "trait_type": "Mouth", "value": "Mad" },
+			{ "trait_type": "Clothes", "value": "T-shirt" }
+		],
+		"creators": [],
+		"collection": { "name": "Patika Bears", "family": "Bears" },
+		"symbol": "PBEAR",
+		"seller_fee_basis_points": 0,
+		"image": "ipfs://QmbWQXeFYfp7ozLq9V7N5X72tEFvFXHVbzfntTnNaXWkU6/2.png",
+		"compiler": "Genfty.com"
+	},
+	{
+		"name": "Patika Bear #3",
+		"description": "Patika Bear #3",
+		"attributes": [
+			{ "trait_type": "Background", "value": "Purple" },
+			{ "trait_type": "Fur", "value": "Red" },
+			{ "trait_type": "Eyes", "value": "Happy" },
+			{ "trait_type": "Mouth", "value": "Thinking" },
+			{ "trait_type": "Clothes", "value": "Shirt" }
+		],
+		"creators": [],
+		"collection": { "name": "Patika Bears", "family": "Bears" },
+		"symbol": "PBEAR",
+		"seller_fee_basis_points": 0,
+		"image": "ipfs://QmbWQXeFYfp7ozLq9V7N5X72tEFvFXHVbzfntTnNaXWkU6/3.png",
+		"compiler": "Genfty.com"
+	},
+	{
+		"name": "Patika Bear #4",
+		"description": "Patika Bear #4",
+		"attributes": [
+			{ "trait_type": "Background", "value": "Orange" },
+			{ "trait_type": "Fur", "value": "Orange" },
+			{ "trait_type": "Eyes", "value": "Happy" },
+			{ "trait_type": "Mouth", "value": "Mad" },
+			{ "trait_type": "Clothes", "value": "Suit" }
+		],
+		"creators": [],
+		"collection": { "name": "Patika Bears", "family": "Bears" },
+		"symbol": "PBEAR",
+		"seller_fee_basis_points": 0,
+		"image": "ipfs://QmbWQXeFYfp7ozLq9V7N5X72tEFvFXHVbzfntTnNaXWkU6/4.png",
+		"compiler": "Genfty.com"
+	},
+	{
+		"name": "Patika Bear #5",
+		"description": "Patika Bear #5",
+		"attributes": [
+			{ "trait_type": "Background", "value": "Green" },
+			{ "trait_type": "Fur", "value": "Orange" },
+			{ "trait_type": "Eyes", "value": "Wink" },
+			{ "trait_type": "Mouth", "value": "Confused" },
+			{ "trait_type": "Clothes", "value": "Shirt" }
+		],
+		"creators": [],
+		"collection": { "name": "Patika Bears", "family": "Bears" },
+		"symbol": "PBEAR",
+		"seller_fee_basis_points": 0,
+		"image": "ipfs://QmbWQXeFYfp7ozLq9V7N5X72tEFvFXHVbzfntTnNaXWkU6/5.png",
+		"compiler": "Genfty.com"
+	},
+	{
+		"name": "Patika Bear #6",
+		"description": "Patika Bear #6",
+		"attributes": [
+			{ "trait_type": "Background", "value": "Red" },
+			{ "trait_type": "Fur", "value": "Yellow" },
+			{ "trait_type": "Eyes", "value": "Open" },
+			{ "trait_type": "Mouth", "value": "Mad" },
+			{ "trait_type": "Clothes", "value": "Vest" }
+		],
+		"creators": [],
+		"collection": { "name": "Patika Bears", "family": "Bears" },
+		"symbol": "PBEAR",
+		"seller_fee_basis_points": 0,
+		"image": "ipfs://QmbWQXeFYfp7ozLq9V7N5X72tEFvFXHVbzfntTnNaXWkU6/6.png",
+		"compiler": "Genfty.com"
+	},
+	{
+		"name": "Patika Bear #7",
+		"description": "Patika Bear #7",
+		"attributes": [
+			{ "trait_type": "Background", "value": "Pink" },
+			{ "trait_type": "Fur", "value": "Yellow" },
+			{ "trait_type": "Eyes", "value": "Open" },
+			{ "trait_type": "Mouth", "value": "Smile" },
+			{ "trait_type": "Clothes", "value": "Shape 1" }
+		],
+		"creators": [],
+		"collection": { "name": "Patika Bears", "family": "Bears" },
+		"symbol": "PBEAR",
+		"seller_fee_basis_points": 0,
+		"image": "ipfs://QmbWQXeFYfp7ozLq9V7N5X72tEFvFXHVbzfntTnNaXWkU6/7.png",
+		"compiler": "Genfty.com"
+	},
+	{
+		"name": "Patika Bear #8",
+		"description": "Patika Bear #8",
+		"attributes": [
+			{ "trait_type": "Background", "value": "Blue" },
+			{ "trait_type": "Fur", "value": "Green" },
+			{ "trait_type": "Eyes", "value": "Proud" },
+			{ "trait_type": "Mouth", "value": "Happy" },
+			{ "trait_type": "Clothes", "value": "Coat" }
+		],
+		"creators": [],
+		"collection": { "name": "Patika Bears", "family": "Bears" },
+		"symbol": "PBEAR",
+		"seller_fee_basis_points": 0,
+		"image": "ipfs://QmbWQXeFYfp7ozLq9V7N5X72tEFvFXHVbzfntTnNaXWkU6/8.png",
+		"compiler": "Genfty.com"
+	},
+	{
+		"name": "Patika Bear #9",
+		"description": "Patika Bear #9",
+		"attributes": [
+			{ "trait_type": "Background", "value": "Red" },
+			{ "trait_type": "Fur", "value": "Blue" },
+			{ "trait_type": "Eyes", "value": "Chill" },
+			{ "trait_type": "Mouth", "value": "Happy" },
+			{ "trait_type": "Clothes", "value": "Suit" }
+		],
+		"creators": [],
+		"collection": { "name": "Patika Bears", "family": "Bears" },
+		"symbol": "PBEAR",
+		"seller_fee_basis_points": 0,
+		"image": "ipfs://QmbWQXeFYfp7ozLq9V7N5X72tEFvFXHVbzfntTnNaXWkU6/9.png",
+		"compiler": "Genfty.com"
+	},
+	{
+		"name": "Patika Bear #10",
+		"description": "Patika Bear #10",
+		"attributes": [
+			{ "trait_type": "Background", "value": "Orange" },
+			{ "trait_type": "Fur", "value": "Blue" },
+			{ "trait_type": "Eyes", "value": "Angry" },
+			{ "trait_type": "Mouth", "value": "Smile" },
+			{ "trait_type": "Clothes", "value": "Shape 1" }
+		],
+		"creators": [],
+		"collection": { "name": "Patika Bears", "family": "Bears" },
+		"symbol": "PBEAR",
+		"seller_fee_basis_points": 0,
+		"image": "ipfs://QmbWQXeFYfp7ozLq9V7N5X72tEFvFXHVbzfntTnNaXWkU6/10.png",
+		"compiler": "Genfty.com"
+	},
+	{
+		"name": "Patika Bear #11",
+		"description": "Patika Bear #11",
+		"attributes": [
+			{ "trait_type": "Background", "value": "Green" },
+			{ "trait_type": "Fur", "value": "Purple" },
+			{ "trait_type": "Eyes", "value": "Chill" },
+			{ "trait_type": "Mouth", "value": "Smile" },
+			{ "trait_type": "Clothes", "value": "Vest" }
+		],
+		"creators": [],
+		"collection": { "name": "Patika Bears", "family": "Bears" },
+		"symbol": "PBEAR",
+		"seller_fee_basis_points": 0,
+		"image": "ipfs://QmbWQXeFYfp7ozLq9V7N5X72tEFvFXHVbzfntTnNaXWkU6/11.png",
+		"compiler": "Genfty.com"
+	},
+	{
+		"name": "Patika Bear #12",
+		"description": "Patika Bear #12",
+		"attributes": [
+			{ "trait_type": "Background", "value": "Blue" },
+			{ "trait_type": "Fur", "value": "Red" },
+			{ "trait_type": "Eyes", "value": "Wink" },
+			{ "trait_type": "Mouth", "value": "Thinking" },
+			{ "trait_type": "Clothes", "value": "Shape 1" }
+		],
+		"creators": [],
+		"collection": { "name": "Patika Bears", "family": "Bears" },
+		"symbol": "PBEAR",
+		"seller_fee_basis_points": 0,
+		"image": "ipfs://QmbWQXeFYfp7ozLq9V7N5X72tEFvFXHVbzfntTnNaXWkU6/12.png",
+		"compiler": "Genfty.com"
+	},
+	{
+		"name": "Patika Bear #13",
+		"description": "Patika Bear #13",
+		"attributes": [
+			{ "trait_type": "Background", "value": "Pink" },
+			{ "trait_type": "Fur", "value": "Orange" },
+			{ "trait_type": "Eyes", "value": "Angry" },
+			{ "trait_type": "Mouth", "value": "Confused" },
+			{ "trait_type": "Clothes", "value": "T-shirt" }
+		],
+		"creators": [],
+		"collection": { "name": "Patika Bears", "family": "Bears" },
+		"symbol": "PBEAR",
+		"seller_fee_basis_points": 0,
+		"image": "ipfs://QmbWQXeFYfp7ozLq9V7N5X72tEFvFXHVbzfntTnNaXWkU6/13.png",
+		"compiler": "Genfty.com"
+	},
+	{
+		"name": "Patika Bear #14",
+		"description": "Patika Bear #14",
+		"attributes": [
+			{ "trait_type": "Background", "value": "Orange" },
+			{ "trait_type": "Fur", "value": "Black" },
+			{ "trait_type": "Eyes", "value": "Wink" },
+			{ "trait_type": "Mouth", "value": "Mad" },
+			{ "trait_type": "Clothes", "value": "Coat" }
+		],
+		"creators": [],
+		"collection": { "name": "Patika Bears", "family": "Bears" },
+		"symbol": "PBEAR",
+		"seller_fee_basis_points": 0,
+		"image": "ipfs://QmbWQXeFYfp7ozLq9V7N5X72tEFvFXHVbzfntTnNaXWkU6/14.png",
+		"compiler": "Genfty.com"
+	},
+	{
+		"name": "Patika Bear #15",
+		"description": "Patika Bear #15",
+		"attributes": [
+			{ "trait_type": "Background", "value": "Green" },
+			{ "trait_type": "Fur", "value": "Black" },
+			{ "trait_type": "Eyes", "value": "Angry" },
+			{ "trait_type": "Mouth", "value": "Sad" },
+			{ "trait_type": "Clothes", "value": "Suit" }
+		],
+		"creators": [],
+		"collection": { "name": "Patika Bears", "family": "Bears" },
+		"symbol": "PBEAR",
+		"seller_fee_basis_points": 0,
+		"image": "ipfs://QmbWQXeFYfp7ozLq9V7N5X72tEFvFXHVbzfntTnNaXWkU6/15.png",
+		"compiler": "Genfty.com"
+	},
+	{
+		"name": "Patika Bear #16",
+		"description": "Patika Bear #16",
+		"attributes": [
+			{ "trait_type": "Background", "value": "Pink" },
+			{ "trait_type": "Fur", "value": "Green" },
+			{ "trait_type": "Eyes", "value": "Wink" },
+			{ "trait_type": "Mouth", "value": "Smile" },
+			{ "trait_type": "Clothes", "value": "Shirt" }
+		],
+		"creators": [],
+		"collection": { "name": "Patika Bears", "family": "Bears" },
+		"symbol": "PBEAR",
+		"seller_fee_basis_points": 0,
+		"image": "ipfs://QmbWQXeFYfp7ozLq9V7N5X72tEFvFXHVbzfntTnNaXWkU6/16.png",
+		"compiler": "Genfty.com"
+	},
+	{
+		"name": "Patika Bear #17",
+		"description": "Patika Bear #17",
+		"attributes": [
+			{ "trait_type": "Background", "value": "Red" },
+			{ "trait_type": "Fur", "value": "Green" },
+			{ "trait_type": "Eyes", "value": "Chill" },
+			{ "trait_type": "Mouth", "value": "Confused" },
+			{ "trait_type": "Clothes", "value": "None" }
+		],
+		"creators": [],
+		"collection": { "name": "Patika Bears", "family": "Bears" },
+		"symbol": "PBEAR",
+		"seller_fee_basis_points": 0,
+		"image": "ipfs://QmbWQXeFYfp7ozLq9V7N5X72tEFvFXHVbzfntTnNaXWkU6/17.png",
+		"compiler": "Genfty.com"
+	},
+	{
+		"name": "Patika Bear #18",
+		"description": "Patika Bear #18",
+		"attributes": [
+			{ "trait_type": "Background", "value": "Pink" },
+			{ "trait_type": "Fur", "value": "Purple" },
+			{ "trait_type": "Eyes", "value": "Proud" },
+			{ "trait_type": "Mouth", "value": "Sad" },
+			{ "trait_type": "Clothes", "value": "Vest" }
+		],
+		"creators": [],
+		"collection": { "name": "Patika Bears", "family": "Bears" },
+		"symbol": "PBEAR",
+		"seller_fee_basis_points": 0,
+		"image": "ipfs://QmbWQXeFYfp7ozLq9V7N5X72tEFvFXHVbzfntTnNaXWkU6/18.png",
+		"compiler": "Genfty.com"
+	},
+	{
+		"name": "Patika Bear #19",
+		"description": "Patika Bear #19",
+		"attributes": [
+			{ "trait_type": "Background", "value": "Blue" },
+			{ "trait_type": "Fur", "value": "Gray" },
+			{ "trait_type": "Eyes", "value": "Chill" },
+			{ "trait_type": "Mouth", "value": "Happy" },
+			{ "trait_type": "Clothes", "value": "None" }
+		],
+		"creators": [],
+		"collection": { "name": "Patika Bears", "family": "Bears" },
+		"symbol": "PBEAR",
+		"seller_fee_basis_points": 0,
+		"image": "ipfs://QmbWQXeFYfp7ozLq9V7N5X72tEFvFXHVbzfntTnNaXWkU6/19.png",
+		"compiler": "Genfty.com"
+	},
+	{
+		"name": "Patika Bear #20",
+		"description": "Patika Bear #20",
+		"attributes": [
+			{ "trait_type": "Background", "value": "Red" },
+			{ "trait_type": "Fur", "value": "Red" },
+			{ "trait_type": "Eyes", "value": "Proud" },
+			{ "trait_type": "Mouth", "value": "Thinking" },
+			{ "trait_type": "Clothes", "value": "None" }
+		],
+		"creators": [],
+		"collection": { "name": "Patika Bears", "family": "Bears" },
+		"symbol": "PBEAR",
+		"seller_fee_basis_points": 0,
+		"image": "ipfs://QmbWQXeFYfp7ozLq9V7N5X72tEFvFXHVbzfntTnNaXWkU6/20.png",
+		"compiler": "Genfty.com"
+	}
+]

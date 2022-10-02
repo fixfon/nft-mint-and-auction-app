@@ -1,0 +1,17 @@
+{
+	"name": "Patika Bear #8",
+	"description": "Patika Bear #8",
+	"attributes": [
+		{ "trait_type": "Background", "value": "Blue" },
+		{ "trait_type": "Fur", "value": "Green" },
+		{ "trait_type": "Eyes", "value": "Proud" },
+		{ "trait_type": "Mouth", "value": "Happy" },
+		{ "trait_type": "Clothes", "value": "Coat" }
+	],
+	"creators": [],
+	"collection": { "name": "Patika Bears", "family": "Bears" },
+	"symbol": "PBEAR",
+	"seller_fee_basis_points": 0,
+	"image": "ipfs://QmbWQXeFYfp7ozLq9V7N5X72tEFvFXHVbzfntTnNaXWkU6/8.png",
+	"compiler": "Genfty.com"
+}

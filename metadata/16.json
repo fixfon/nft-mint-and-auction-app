@@ -1,0 +1,17 @@
+{
+	"name": "Patika Bear #16",
+	"description": "Patika Bear #16",
+	"attributes": [
+		{ "trait_type": "Background", "value": "Pink" },
+		{ "trait_type": "Fur", "value": "Green" },
+		{ "trait_type": "Eyes", "value": "Wink" },
+		{ "trait_type": "Mouth", "value": "Smile" },
+		{ "trait_type": "Clothes", "value": "Shirt" }
+	],
+	"creators": [],
+	"collection": { "name": "Patika Bears", "family": "Bears" },
+	"symbol": "PBEAR",
+	"seller_fee_basis_points": 0,
+	"image": "ipfs://QmbWQXeFYfp7ozLq9V7N5X72tEFvFXHVbzfntTnNaXWkU6/16.png",
+	"compiler": "Genfty.com"
+}

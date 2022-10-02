@@ -1,0 +1,17 @@
+{
+	"name": "Patika Bear #1",
+	"description": "Patika Bear #1",
+	"attributes": [
+		{ "trait_type": "Background", "value": "Green" },
+		{ "trait_type": "Fur", "value": "Gray" },
+		{ "trait_type": "Eyes", "value": "Open" },
+		{ "trait_type": "Mouth", "value": "Sad" },
+		{ "trait_type": "Clothes", "value": "Coat" }
+	],
+	"creators": [],
+	"collection": { "name": "Patika Bears", "family": "Bears" },
+	"symbol": "PBEAR",
+	"seller_fee_basis_points": 0,
+	"image": "ipfs://QmbWQXeFYfp7ozLq9V7N5X72tEFvFXHVbzfntTnNaXWkU6/1.png",
+	"compiler": "Genfty.com"
+}
