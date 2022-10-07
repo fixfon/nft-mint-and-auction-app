@@ -6,8 +6,8 @@
 
 - [x] 1. Create example NFTs and upload them to IPFS
 - [x] 2. Create a new ERC721 contract and test it.
-- [INPROGRESS] 3. Create Auction contract and test it.
-- [ ] 4. Create folder structure for frontend.
+- [x] 3. Create Auction contract and test it.
+- [x] 4. Create folder structure for frontend.
 - [ ] 5. Create tests for the contracts.
 - [ ] 6. Deploy the contracts to the testnet.
 - [ ] 7. Interact with the contracts via frontend.
