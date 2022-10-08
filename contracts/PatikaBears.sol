@@ -77,7 +77,7 @@ contract PatikaBears is ERC721, ERC721Enumerable, Pausable, Ownable {
 
     function publicSafeMint() public payable {
         require(saleIsActive, "Sale must be active to mint");
-        require(totalSupply() <= maxSupply, "Sold out");
+        require(totalSupply() + 1 <= maxSupply, "Sold out");
         require(msg.value == mintPrice, "Incorrect value");
         require(balanceOf(msg.sender) < maxPerWallet, "Exeeced max per wallet");
 
