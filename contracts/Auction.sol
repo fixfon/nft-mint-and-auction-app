@@ -86,6 +86,10 @@ contract Auction {
         locked = false;
     }
 
+    function getCurrentAuctionId() public view returns (uint256) {
+        return _auctionIdCounter.current();
+    }
+
     function getAuction(uint256 _auctionId)
         public
         view
@@ -129,8 +133,8 @@ contract Auction {
             _nftTokenId,
             address(0),
             0,
-            _startPrice * 1 ether,
-            _buyNowPrice * 1 ether,
+            _startPrice,
+            _buyNowPrice,
             block.timestamp,
             block.timestamp + 7 days,
             false
@@ -140,8 +144,8 @@ contract Auction {
             auctionId,
             msg.sender,
             _nftTokenId,
-            _startPrice * 1 ether,
-            _buyNowPrice * 1 ether,
+            _startPrice,
+            _buyNowPrice,
             block.timestamp,
             block.timestamp + 7 days
         );
@@ -302,6 +306,9 @@ contract Auction {
         );
 
         _auction.canceled = true;
+        bidList[_auctionId][_auction.highestBidder] += _auction.highestBid;
+        _auction.highestBidder = address(0);
+        _auction.highestBid = 0;
 
         contractAddress.safeTransferFrom(
             address(this),
