@@ -1,9 +1,6 @@
 // src/pages/_app.tsx
 import '../styles/globals.css';
 import type { AppType } from 'next/app';
-import { trpc } from '../utils/trpc';
-import { SessionProvider } from 'next-auth/react';
-import type { Session } from 'next-auth';
 import '@rainbow-me/rainbowkit/styles.css';
 
 import {
@@ -14,15 +11,10 @@ import {
 import { chain, configureChains, createClient, WagmiConfig } from 'wagmi';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 
-const MyApp: AppType<{ session: Session | null }> = ({
-  Component,
-  pageProps: { session, ...pageProps },
-}) => {
+const MyApp: AppType<{}> = ({ Component, pageProps: { ...pageProps } }) => {
   const { chains, provider, webSocketProvider } = configureChains(
     [chain.goerli],
-    [
-      alchemyProvider({ apiKey: '_6gTeNHJyePn6cr9-GA2fWtiu7heKpP5' }),
-    ]
+    [alchemyProvider({ apiKey: '_6gTeNHJyePn6cr9-GA2fWtiu7heKpP5' })]
   );
 
   const { wallets } = getDefaultWallets({
@@ -43,13 +35,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
   });
   return (
     <WagmiConfig client={wagmiClient}>
-      <SessionProvider session={session}>
-        <RainbowKitProvider appInfo={appInfo} chains={chains}>
-          <Component {...pageProps} />
-        </RainbowKitProvider>
-      </SessionProvider>
+      <RainbowKitProvider appInfo={appInfo} chains={chains}>
+        <Component {...pageProps} />
+      </RainbowKitProvider>
     </WagmiConfig>
   );
 };
 
-export default trpc.withTRPC(MyApp);
+export default MyApp;
