@@ -15,7 +15,6 @@ import FlipCard, { BackCard, FrontCard } from '../components/FlipCard';
 import { PatikaBearsContract } from '../../contractAddress';
 import Layout from '../layouts/Layout';
 import { ethers } from 'ethers';
-import debounce from 'debounce';
 
 const nftContractConfig = {
   addressOrName: PatikaBearsContract,
@@ -53,17 +52,19 @@ const Home: NextPage = () => {
     ...nftContractConfig,
     functionName: 'totalSupply',
     watch: true,
+    enabled: !isMintLoading,
   });
 
-  const { data: ownerOfToken, refetch: refetchOwnerOfToken } = useContractRead({
+  const { data: ownerOfToken } = useContractRead({
     ...nftContractConfig,
     functionName: 'ownerOf',
     watch: true,
     args: [queryTokenId],
+    enabled: !tokenQueryCompleted && !isMintLoading,
     onSuccess: () => {
-      console.log(tokenList);
-      console.log(queryTokenId);
-      console.log(Number(totalSupplyData?.toString()));
+      // console.log(tokenList);
+      // console.log(queryTokenId);
+      // console.log(Number(totalSupplyData?.toString()));
       if (queryTokenId < Number(totalSupplyData?.toString()) + 1) {
         checkOwner() &&
           checkNotAdded() &&
@@ -72,9 +73,10 @@ const Home: NextPage = () => {
         setQueryTokenId((prev) => {
           if (prev < Number(totalSupplyData?.toString())) {
             return prev + 1;
+          } else {
+            setTokenQueryCompleted(true);
+            return prev;
           }
-          setTokenQueryCompleted(true);
-          return prev;
         });
       }
     },
@@ -91,12 +93,20 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (totalSupplyData) {
       setTotalMinted(totalSupplyData.toNumber());
-      if (isConnected) {
-      }
+      setTokenQueryCompleted(false);
     }
   }, [totalSupplyData]);
-
   const isMinted = txSuccess;
+
+  useEffect(() => {
+    console.log(address);
+    if (!address) setTokenList([]);
+    else {
+      setTokenQueryCompleted(false);
+      setQueryTokenId(1);
+      setTokenList([]);
+    }
+  }, [address]);
 
   const checkOwner = () => {
     if (ownerOfToken === address) {
@@ -118,7 +128,7 @@ const Home: NextPage = () => {
     <>
       <Head>
         <title>PatikaBears Mint NFT & Auction</title>
-        <meta name="description" content="PatikaBears Mint NFT & Auction" />
+        <meta name="description" content="PatikaBears Minting NFT" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -202,7 +212,9 @@ const Home: NextPage = () => {
                       View on{' '}
                       <a
                         className="font-semibold hover:text-[#d0d500]"
-                        href={`https://testnets.opensea.io/assets/goerli/${txData?.to}/1`}
+                        href={`https://testnets.opensea.io/assets/goerli/${
+                          txData?.to
+                        }/${totalMinted + 1}`}
                       >
                         Opensea
                       </a>
@@ -213,7 +225,7 @@ const Home: NextPage = () => {
             </div>
           )}
           <div>
-            <h2 className="text-center text-2xl mt-12 mb-8 font-bold text-slate-600">
+            <h2 className="mt-12 mb-8 text-center text-2xl font-bold text-slate-600">
               Your NFT Bag
             </h2>
             <div className="flex items-center justify-center gap-8">
