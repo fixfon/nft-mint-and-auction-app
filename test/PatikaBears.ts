@@ -1,6 +1,6 @@
-import { expect } from 'chai';
-import { ethers } from 'hardhat';
-import { loadFixture } from '@nomicfoundation/hardhat-network-helpers';
+import {expect} from 'chai';
+import {ethers} from 'hardhat';
+import {loadFixture} from '@nomicfoundation/hardhat-network-helpers';
 
 describe('PatikaBears', function () {
   async function deployFixture() {
@@ -31,13 +31,13 @@ describe('PatikaBears', function () {
 
   describe('Deployment', function () {
     it('Should set the right owner', async function () {
-      const { patikaBears, owner } = await loadFixture(deployFixture);
+      const {patikaBears, owner} = await loadFixture(deployFixture);
 
       expect(await patikaBears.owner()).to.equal(owner.address);
     });
 
     it('Should set the right mint price', async function () {
-      const { patikaBears } = await loadFixture(deployFixture);
+      const {patikaBears} = await loadFixture(deployFixture);
 
       expect(await patikaBears.mintPrice()).to.equal(
         ethers.utils.parseEther('0.02')
@@ -45,13 +45,13 @@ describe('PatikaBears', function () {
     });
 
     it('Should set the right max supply', async function () {
-      const { patikaBears } = await loadFixture(deployFixture);
+      const {patikaBears} = await loadFixture(deployFixture);
 
       expect(await patikaBears.maxSupply()).to.equal(20);
     });
 
     it('Should set the right token base URI', async function () {
-      const { patikaBears } = await loadFixture(deployFixture);
+      const {patikaBears} = await loadFixture(deployFixture);
 
       expect(await patikaBears.saleIsActive()).to.equal(true);
       expect(
@@ -67,7 +67,7 @@ describe('PatikaBears', function () {
 
   describe('Minting', function () {
     it('Should be mintable by everyone default', async function () {
-      const { patikaBears } = await loadFixture(deployFixture);
+      const {patikaBears} = await loadFixture(deployFixture);
 
       expect(await patikaBears.saleIsActive()).to.equal(true);
       expect(
@@ -78,19 +78,19 @@ describe('PatikaBears', function () {
     });
 
     it('Should not be mintable by everyone if sale is not active', async function () {
-      const { patikaBears } = await loadFixture(deployFixture);
+      const {patikaBears} = await loadFixture(deployFixture);
       await patikaBears.toggleIsPublicMintEnabled();
       expect(await patikaBears.saleIsActive()).to.equal(false);
       await expect(
-        patikaBears.publicSafeMint({ value: ethers.utils.parseEther('0.02') })
+        patikaBears.publicSafeMint({value: ethers.utils.parseEther('0.02')})
       ).to.be.revertedWith('Sale must be active to mint');
     });
 
     it('Should not be mintable by everyone if mint price is not paid', async function () {
-      const { patikaBears } = await loadFixture(deployFixture);
+      const {patikaBears} = await loadFixture(deployFixture);
       expect(await patikaBears.saleIsActive()).to.equal(true);
       await expect(
-        patikaBears.publicSafeMint({ value: ethers.utils.parseEther('0.01') })
+        patikaBears.publicSafeMint({value: ethers.utils.parseEther('0.01')})
       ).to.be.revertedWith('Incorrect value');
     });
 
@@ -135,7 +135,7 @@ describe('PatikaBears', function () {
     });
 
     it('Every account should mint max 5 tokens', async function () {
-      const { patikaBears } = await loadFixture(deployFixture);
+      const {patikaBears} = await loadFixture(deployFixture);
       expect(await patikaBears.saleIsActive()).to.equal(true);
       for (let i = 0; i < 5; i++) {
         await patikaBears.publicSafeMint({
@@ -143,7 +143,7 @@ describe('PatikaBears', function () {
         });
       }
       await expect(
-        patikaBears.publicSafeMint({ value: ethers.utils.parseEther('0.02') })
+        patikaBears.publicSafeMint({value: ethers.utils.parseEther('0.02')})
       ).to.be.revertedWith('Exeeced max per wallet');
     });
   });
@@ -151,7 +151,7 @@ describe('PatikaBears', function () {
   describe('Withdrawals', function () {
     describe('Transfers', function () {
       it('Accounts should transfer tokens to each other', async function () {
-        const { patikaBears, owner, otherAccount } = await loadFixture(
+        const {patikaBears, owner, otherAccount} = await loadFixture(
           deployFixture
         );
         expect(await patikaBears.saleIsActive()).to.equal(true);
@@ -168,10 +168,50 @@ describe('PatikaBears', function () {
     });
 
     it('Owner should withdraw all balance', async function () {
-      const { patikaBears } = await loadFixture(deployFixture);
+      const {patikaBears} = await loadFixture(deployFixture);
 
       await patikaBears.withdraw();
       expect(await ethers.provider.getBalance(patikaBears.address)).to.equal(0);
+    });
+  });
+
+  describe('Functionality', function () {
+    it('Should return token ids of an address', async function () {
+      const {patikaBears, owner, otherAccount} = await loadFixture(
+        deployFixture
+      );
+      await patikaBears.publicSafeMint({
+        value: ethers.utils.parseEther('0.02'),
+      });
+      await patikaBears.publicSafeMint({
+        value: ethers.utils.parseEther('0.02'),
+      });
+      await patikaBears.publicSafeMint({
+        value: ethers.utils.parseEther('0.02'),
+      });
+      await patikaBears.publicSafeMint({
+        value: ethers.utils.parseEther('0.02'),
+      });
+      await patikaBears.publicSafeMint({
+        value: ethers.utils.parseEther('0.02'),
+      });
+      await patikaBears['safeTransferFrom(address,address,uint256)'](
+        owner.address,
+        otherAccount.address,
+        1
+      );
+      await patikaBears['safeTransferFrom(address,address,uint256)'](
+        owner.address,
+        otherAccount.address,
+        3
+      );
+      await patikaBears['safeTransferFrom(address,address,uint256)'](
+        owner.address,
+        otherAccount.address,
+        5
+      );
+      const tokenIds = await patikaBears.tokensOfOwner(otherAccount.address);
+      expect(tokenIds).to.deep.equal([1, 3, 5]);
     });
   });
 });

@@ -359,7 +359,7 @@ describe('Auction', function () {
 				);
 				await auction.cancelAuction(0);
 
-				expect(await (await auction.getAuction(0)).canceled).to.equal(true);
+				expect(await (await auction.getAuction(0)).isCanceled).to.equal(true);
 				expect(await patikaBears.ownerOf(1)).to.equal(
 					await (
 						await auction.getAuction(0)

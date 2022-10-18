@@ -38,7 +38,9 @@ export declare namespace Auction {
     buyNowPrice: PromiseOrValue<BigNumberish>;
     startedAt: PromiseOrValue<BigNumberish>;
     endAt: PromiseOrValue<BigNumberish>;
-    canceled: PromiseOrValue<boolean>;
+    isSold: PromiseOrValue<boolean>;
+    isEnded: PromiseOrValue<boolean>;
+    isCanceled: PromiseOrValue<boolean>;
   };
 
   export type AuctionItemStructOutput = [
@@ -50,6 +52,8 @@ export declare namespace Auction {
     BigNumber,
     BigNumber,
     BigNumber,
+    boolean,
+    boolean,
     boolean
   ] & {
     seller: string;
@@ -60,7 +64,9 @@ export declare namespace Auction {
     buyNowPrice: BigNumber;
     startedAt: BigNumber;
     endAt: BigNumber;
-    canceled: boolean;
+    isSold: boolean;
+    isEnded: boolean;
+    isCanceled: boolean;
   };
 }
 
@@ -76,10 +82,14 @@ export interface AuctionInterface extends utils.Interface {
     "endAuction(uint256)": FunctionFragment;
     "getAuction(uint256)": FunctionFragment;
     "getAuctionList()": FunctionFragment;
+    "getAuctionsOfSeller(address)": FunctionFragment;
     "getCurrentAuctionId()": FunctionFragment;
+    "getOwnerBalance()": FunctionFragment;
+    "getOwnerCut()": FunctionFragment;
     "owner()": FunctionFragment;
-    "ownerCut()": FunctionFragment;
     "refundBid(uint256)": FunctionFragment;
+    "setOwnerCut(uint256)": FunctionFragment;
+    "withdrawCut()": FunctionFragment;
   };
 
   getFunction(
@@ -94,10 +104,14 @@ export interface AuctionInterface extends utils.Interface {
       | "endAuction"
       | "getAuction"
       | "getAuctionList"
+      | "getAuctionsOfSeller"
       | "getCurrentAuctionId"
+      | "getOwnerBalance"
+      | "getOwnerCut"
       | "owner"
-      | "ownerCut"
       | "refundBid"
+      | "setOwnerCut"
+      | "withdrawCut"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -145,14 +159,33 @@ export interface AuctionInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "getAuctionsOfSeller",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "getCurrentAuctionId",
     values?: undefined
   ): string;
+  encodeFunctionData(
+    functionFragment: "getOwnerBalance",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getOwnerCut",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(functionFragment: "ownerCut", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "refundBid",
     values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setOwnerCut",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "withdrawCut",
+    values?: undefined
   ): string;
 
   decodeFunctionResult(functionFragment: "auctions", data: BytesLike): Result;
@@ -178,19 +211,39 @@ export interface AuctionInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "getAuctionsOfSeller",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "getCurrentAuctionId",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "getOwnerBalance",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getOwnerCut",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "ownerCut", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "refundBid", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "setOwnerCut",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "withdrawCut",
+    data: BytesLike
+  ): Result;
 
   events: {
     "AuctionBid(uint256,address,uint256)": EventFragment;
     "AuctionBuyNow(uint256,address,uint256)": EventFragment;
     "AuctionCanceled(uint256,address,uint256)": EventFragment;
     "AuctionCreated(uint256,address,uint256,uint256,uint256,uint256,uint256)": EventFragment;
-    "AuctionEnded(uint256,address,uint256)": EventFragment;
+    "AuctionEnded(uint256,bool)": EventFragment;
+    "AuctionSold(uint256,bool,address,uint256)": EventFragment;
     "BidderWithdraw(uint256,address,uint256)": EventFragment;
   };
 
@@ -199,6 +252,7 @@ export interface AuctionInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "AuctionCanceled"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "AuctionCreated"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "AuctionEnded"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "AuctionSold"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "BidderWithdraw"): EventFragment;
 }
 
@@ -256,15 +310,27 @@ export type AuctionCreatedEventFilter = TypedEventFilter<AuctionCreatedEvent>;
 
 export interface AuctionEndedEventObject {
   auctionId: BigNumber;
-  winner: string;
-  amount: BigNumber;
+  isSold: boolean;
 }
 export type AuctionEndedEvent = TypedEvent<
-  [BigNumber, string, BigNumber],
+  [BigNumber, boolean],
   AuctionEndedEventObject
 >;
 
 export type AuctionEndedEventFilter = TypedEventFilter<AuctionEndedEvent>;
+
+export interface AuctionSoldEventObject {
+  auctionId: BigNumber;
+  isSold: boolean;
+  winner: string;
+  bid: BigNumber;
+}
+export type AuctionSoldEvent = TypedEvent<
+  [BigNumber, boolean, string, BigNumber],
+  AuctionSoldEventObject
+>;
+
+export type AuctionSoldEventFilter = TypedEventFilter<AuctionSoldEvent>;
 
 export interface BidderWithdrawEventObject {
   auctionId: BigNumber;
@@ -318,6 +384,8 @@ export interface Auction extends BaseContract {
         BigNumber,
         BigNumber,
         BigNumber,
+        boolean,
+        boolean,
         boolean
       ] & {
         seller: string;
@@ -328,7 +396,9 @@ export interface Auction extends BaseContract {
         buyNowPrice: BigNumber;
         startedAt: BigNumber;
         endAt: BigNumber;
-        canceled: boolean;
+        isSold: boolean;
+        isEnded: boolean;
+        isCanceled: boolean;
       }
     >;
 
@@ -374,16 +444,32 @@ export interface Auction extends BaseContract {
 
     getAuctionList(
       overrides?: CallOverrides
-    ): Promise<[Auction.AuctionItemStructOutput[]]>;
+    ): Promise<[BigNumber[], Auction.AuctionItemStructOutput[]]>;
+
+    getAuctionsOfSeller(
+      _seller: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber[], Auction.AuctionItemStructOutput[]]>;
 
     getCurrentAuctionId(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    owner(overrides?: CallOverrides): Promise<[string]>;
+    getOwnerBalance(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    ownerCut(overrides?: CallOverrides): Promise<[BigNumber]>;
+    getOwnerCut(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    owner(overrides?: CallOverrides): Promise<[string]>;
 
     refundBid(
       _auctionId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setOwnerCut(
+      _ownerCut: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    withdrawCut(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
@@ -401,6 +487,8 @@ export interface Auction extends BaseContract {
       BigNumber,
       BigNumber,
       BigNumber,
+      boolean,
+      boolean,
       boolean
     ] & {
       seller: string;
@@ -411,7 +499,9 @@ export interface Auction extends BaseContract {
       buyNowPrice: BigNumber;
       startedAt: BigNumber;
       endAt: BigNumber;
-      canceled: boolean;
+      isSold: boolean;
+      isEnded: boolean;
+      isCanceled: boolean;
     }
   >;
 
@@ -457,16 +547,32 @@ export interface Auction extends BaseContract {
 
   getAuctionList(
     overrides?: CallOverrides
-  ): Promise<Auction.AuctionItemStructOutput[]>;
+  ): Promise<[BigNumber[], Auction.AuctionItemStructOutput[]]>;
+
+  getAuctionsOfSeller(
+    _seller: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<[BigNumber[], Auction.AuctionItemStructOutput[]]>;
 
   getCurrentAuctionId(overrides?: CallOverrides): Promise<BigNumber>;
 
-  owner(overrides?: CallOverrides): Promise<string>;
+  getOwnerBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
-  ownerCut(overrides?: CallOverrides): Promise<BigNumber>;
+  getOwnerCut(overrides?: CallOverrides): Promise<BigNumber>;
+
+  owner(overrides?: CallOverrides): Promise<string>;
 
   refundBid(
     _auctionId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setOwnerCut(
+    _ownerCut: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  withdrawCut(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -484,6 +590,8 @@ export interface Auction extends BaseContract {
         BigNumber,
         BigNumber,
         BigNumber,
+        boolean,
+        boolean,
         boolean
       ] & {
         seller: string;
@@ -494,7 +602,9 @@ export interface Auction extends BaseContract {
         buyNowPrice: BigNumber;
         startedAt: BigNumber;
         endAt: BigNumber;
-        canceled: boolean;
+        isSold: boolean;
+        isEnded: boolean;
+        isCanceled: boolean;
       }
     >;
 
@@ -540,18 +650,32 @@ export interface Auction extends BaseContract {
 
     getAuctionList(
       overrides?: CallOverrides
-    ): Promise<Auction.AuctionItemStructOutput[]>;
+    ): Promise<[BigNumber[], Auction.AuctionItemStructOutput[]]>;
+
+    getAuctionsOfSeller(
+      _seller: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber[], Auction.AuctionItemStructOutput[]]>;
 
     getCurrentAuctionId(overrides?: CallOverrides): Promise<BigNumber>;
 
-    owner(overrides?: CallOverrides): Promise<string>;
+    getOwnerBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    ownerCut(overrides?: CallOverrides): Promise<BigNumber>;
+    getOwnerCut(overrides?: CallOverrides): Promise<BigNumber>;
+
+    owner(overrides?: CallOverrides): Promise<string>;
 
     refundBid(
       _auctionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    setOwnerCut(
+      _ownerCut: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    withdrawCut(overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
@@ -607,16 +731,27 @@ export interface Auction extends BaseContract {
       endAt?: null
     ): AuctionCreatedEventFilter;
 
-    "AuctionEnded(uint256,address,uint256)"(
+    "AuctionEnded(uint256,bool)"(
       auctionId?: PromiseOrValue<BigNumberish> | null,
-      winner?: null,
-      amount?: null
+      isSold?: null
     ): AuctionEndedEventFilter;
     AuctionEnded(
       auctionId?: PromiseOrValue<BigNumberish> | null,
-      winner?: null,
-      amount?: null
+      isSold?: null
     ): AuctionEndedEventFilter;
+
+    "AuctionSold(uint256,bool,address,uint256)"(
+      auctionId?: PromiseOrValue<BigNumberish> | null,
+      isSold?: null,
+      winner?: null,
+      bid?: null
+    ): AuctionSoldEventFilter;
+    AuctionSold(
+      auctionId?: PromiseOrValue<BigNumberish> | null,
+      isSold?: null,
+      winner?: null,
+      bid?: null
+    ): AuctionSoldEventFilter;
 
     "BidderWithdraw(uint256,address,uint256)"(
       auctionId?: PromiseOrValue<BigNumberish> | null,
@@ -678,14 +813,30 @@ export interface Auction extends BaseContract {
 
     getAuctionList(overrides?: CallOverrides): Promise<BigNumber>;
 
+    getAuctionsOfSeller(
+      _seller: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     getCurrentAuctionId(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getOwnerBalance(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getOwnerCut(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    ownerCut(overrides?: CallOverrides): Promise<BigNumber>;
-
     refundBid(
       _auctionId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setOwnerCut(
+      _ownerCut: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    withdrawCut(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
@@ -738,16 +889,32 @@ export interface Auction extends BaseContract {
 
     getAuctionList(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    getAuctionsOfSeller(
+      _seller: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     getCurrentAuctionId(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getOwnerBalance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    ownerCut(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getOwnerCut(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     refundBid(
       _auctionId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setOwnerCut(
+      _ownerCut: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    withdrawCut(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

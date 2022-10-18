@@ -55,6 +55,7 @@ export interface PatikaBearsInterface extends utils.Interface {
     "tokenByIndex(uint256)": FunctionFragment;
     "tokenOfOwnerByIndex(address,uint256)": FunctionFragment;
     "tokenURI(uint256)": FunctionFragment;
+    "tokensOfOwner(address)": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
@@ -90,6 +91,7 @@ export interface PatikaBearsInterface extends utils.Interface {
       | "tokenByIndex"
       | "tokenOfOwnerByIndex"
       | "tokenURI"
+      | "tokensOfOwner"
       | "totalSupply"
       | "transferFrom"
       | "transferOwnership"
@@ -187,6 +189,10 @@ export interface PatikaBearsInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
+    functionFragment: "tokensOfOwner",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "totalSupply",
     values?: undefined
   ): string;
@@ -273,6 +279,10 @@ export interface PatikaBearsInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "tokensOfOwner",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "totalSupply",
     data: BytesLike
@@ -504,6 +514,11 @@ export interface PatikaBears extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
+    tokensOfOwner(
+      _owner: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber[]]>;
+
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferFrom(
@@ -635,6 +650,11 @@ export interface PatikaBears extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
+  tokensOfOwner(
+    _owner: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber[]>;
+
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferFrom(
@@ -757,6 +777,11 @@ export interface PatikaBears extends BaseContract {
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
+
+    tokensOfOwner(
+      _owner: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber[]>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -936,6 +961,11 @@ export interface PatikaBears extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    tokensOfOwner(
+      _owner: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferFrom(
@@ -1065,6 +1095,11 @@ export interface PatikaBears extends BaseContract {
 
     tokenURI(
       tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    tokensOfOwner(
+      _owner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
