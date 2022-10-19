@@ -70,7 +70,8 @@ npx hardhat run ./scripts/deploy.ts --network alchemy
 
 ```bash
 npx hardhat verify --network alchemy DEPLOYED_NFT_CONTRACT_ADDRESS
-npx hardhat verify --network alchemy DEPLOYED_AUCTION_CONTRACT_ADDRESS
+npx hardhat verify --network alchemy DEPLOYED_AUCTION_CONTRACT_ADDRESS "DEPLOYED_NFT_CONTRACT_ADDRESS"
+```
 ```
 
 ### How to run the project
