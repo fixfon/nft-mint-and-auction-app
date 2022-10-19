@@ -18,6 +18,31 @@ This project is a NFT minting and auction platform. the PatikaBears NFT collecti
 - [x] 10. Create UI for auctioning and bidding NFTs.
 - [x] 11. Create UI for viewing auctions and biddings.
 
+## User Guide
+
+```bash
+# Clone the repository
+git clone https://github.com/fixfon/nft-mint-and-auction-app.git
+
+# Go inside the directory
+cd nft-mint-and-auction-app
+
+# Install dependencies
+npm install
+```
+
+### Put Environment Variables
+
+Create a `.env` file in the root directory and copy environment variables from .env-example file.
+
+```bash
+ALCHEMY_GOERLI_ENDPOINT=
+DEPLOYER_PRIVATE_KEY=
+MORALIS_API_KEY=
+ALCHEMY_API_KEY=
+ETHERSCAN_API_KEY=
+```
+
 ### How to compile the contracts
 
 You can compile the contracts with the following command:
@@ -63,6 +88,7 @@ npm run dev
 - [NextJS](https://nextjs.org/) - Frontend
 - [TailwindCSS](https://tailwindcss.com/) - CSS Framework
 - [IPFS](https://ipfs.io/) - File storage
+- [Moralis](https://moralis.io/) - Backend as a Service for Interacting with Contracts
 - [Alchemy](https://www.alchemy.com/) - Ethereum Node Provider
 - RainbowKit - for Wallet access and logining
 - [Etherscan](https://etherscan.io/) - for verifying the contracts
@@ -70,6 +96,11 @@ npm run dev
 ### Author & Contact
 
 Created by **Fixfon** for [Patika.dev | Akbank Web 3 Practium](https://patika.dev/)
+
 [Linkedin](https://www.linkedin.com/in/tmcinmt/)
+
 [Github](https://github.com/fixfon)
+
 [Twitter](https://twitter.com/fixfondev)
+
+Discord: fixfon#1111
