@@ -6,7 +6,7 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="mx-auto w-full">
+    <div className="mx-auto w-full min-h-screen bg-primary">
       <Header />
       <main className="container mx-auto p-4">{children}</main>
     </div>
