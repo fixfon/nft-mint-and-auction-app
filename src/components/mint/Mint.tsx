@@ -9,7 +9,6 @@ import {
 } from 'wagmi';
 import { PatikaBearsContract } from '../../../contractAddress';
 import patikaBearsABI from '../../../artifacts/contracts/PatikaBears.sol/PatikaBears.json';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 import FlipCard, { BackCard, FrontCard } from './FlipCard';
 import Image from 'next/image';
 
@@ -25,7 +24,7 @@ const Mint = () => {
   const [mintData, setMintData] = useState<any>(undefined);
   const [txData, setTxData] = useState<any>(undefined);
 
-  const { isConnected, address } = useAccount();
+  const { isConnected } = useAccount();
 
   const { data: totalSupplyData, isLoading: isSupplyLoading } = useContractRead(
     {
@@ -101,7 +100,7 @@ const Mint = () => {
               PatikaBears Minting!
             </h1>
             <p className="my-4 text-xl font-semibold text-neutral">
-              {loading ? totalMinted : '0'} / 20 minted so far!
+              {totalMinted} / 20 minted so far!
             </p>
             <p className="font-semibold text-neutral">Price: 0.02ETH</p>
             {!loading && mintError && (
@@ -158,9 +157,7 @@ const Mint = () => {
                         View on{' '}
                         <a
                           className="font-semibold hover:text-[#d0d500]"
-                          href={`https://testnets.opensea.io/assets/goerli/${
-                            txData?.to
-                          }/${totalMinted + 1}`}
+                          href={`https://testnets.opensea.io/assets/goerli/${txData?.to}/${totalMinted}`}
                         >
                           Opensea
                         </a>
