@@ -9,7 +9,12 @@ const nftContractConfig = {
   abi: patikaBearsABI.abi,
 };
 
-const NFTBag = () => {
+interface NFTBagProps {
+  createAuction?: boolean;
+  setSelectedTokenId?: (tokenId: number) => void;
+}
+
+const NFTBag = ({ createAuction = false, setSelectedTokenId }: NFTBagProps) => {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
@@ -36,8 +41,21 @@ const NFTBag = () => {
       {mounted && isConnected && !isTokenListLoading && tokenList && (
         <div className="grid grid-cols-1 place-items-center gap-8 md:grid-cols-3">
           {tokenList.map((tokenId) => (
-            <div key={tokenId}>
-              <Image src={`/images/${tokenId}.png`} width={200} height={200} />
+            <div
+              className={createAuction ? 'w-48 cursor-pointer border-2 rounded-lg border-white p-1' : 'w-48'}
+              key={tokenId}
+              onClick={() => setSelectedTokenId && setSelectedTokenId(tokenId)}
+            >
+              <h2 className='text-center text-neutral text-xl font-semibold bg-highlight rounded mb-1'>PatikaBears #{tokenId}</h2>
+              <Image src={`/images/${tokenId}.png`} width={192} height={192} />
+              {createAuction && (
+                <button
+                  type="button"
+                  className="w-full rounded-lg py-2 bg-highlight text-center font-semibold text-neutral transition-transform hover:scale-105"
+                >
+                  Create Auction
+                </button>
+              )}
             </div>
           ))}
         </div>

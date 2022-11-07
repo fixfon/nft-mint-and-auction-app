@@ -18,14 +18,14 @@ const Header = () => {
               </Link>
             </li>
             <li className=" mr-4 text-complementary ">
-              <Link href="/auction">
+              <Link href="/auctions">
                 <a className="relative inline-block text-complementary transition-all after:absolute after:bottom-0 after:left-1/2 after:block after:h-0.5 after:w-0 after:bg-neutral after:transition-all after:content-[''] hover:text-neutral hover:after:left-0 hover:after:w-full">
                   Auctions
                 </a>
               </Link>
             </li>
             <li className=" mr-4 text-complementary ">
-              <Link href="/auction">
+              <Link href="/create-auction">
                 <a className="relative inline-block text-complementary transition-all after:absolute after:bottom-0 after:left-1/2 after:block after:h-0.5 after:w-0 after:bg-neutral after:transition-all after:content-[''] hover:text-neutral hover:after:left-0 hover:after:w-full">
                   Create Auction
                 </a>
