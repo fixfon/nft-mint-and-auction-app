@@ -9,14 +9,11 @@ import {
 } from '@rainbow-me/rainbowkit';
 import { chain, createClient, configureChains, WagmiConfig } from 'wagmi';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
-import { publicProvider } from 'wagmi/providers/public';
+// import { publicProvider } from 'wagmi/providers/public';
 
 const { chains, provider, webSocketProvider } = configureChains(
   [chain.goerli],
-  [
-    alchemyProvider({ apiKey: '_6gTeNHJyePn6cr9-GA2fWtiu7heKpP5' }),
-    publicProvider(),
-  ]
+  [alchemyProvider({ apiKey: 'IN-7aXF9TXjAKKIpctq5GQBtvXxJs2_v' })]
 );
 
 const appInfo = {
