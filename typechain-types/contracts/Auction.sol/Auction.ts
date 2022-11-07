@@ -30,6 +30,7 @@ import type {
 
 export declare namespace Auction {
   export type AuctionItemStruct = {
+    id: PromiseOrValue<BigNumberish>;
     seller: PromiseOrValue<string>;
     nftTokenId: PromiseOrValue<BigNumberish>;
     highestBidder: PromiseOrValue<string>;
@@ -44,6 +45,7 @@ export declare namespace Auction {
   };
 
   export type AuctionItemStructOutput = [
+    BigNumber,
     string,
     BigNumber,
     string,
@@ -56,6 +58,7 @@ export declare namespace Auction {
     boolean,
     boolean
   ] & {
+    id: BigNumber;
     seller: string;
     nftTokenId: BigNumber;
     highestBidder: string;
@@ -376,6 +379,7 @@ export interface Auction extends BaseContract {
       overrides?: CallOverrides
     ): Promise<
       [
+        BigNumber,
         string,
         BigNumber,
         string,
@@ -388,6 +392,7 @@ export interface Auction extends BaseContract {
         boolean,
         boolean
       ] & {
+        id: BigNumber;
         seller: string;
         nftTokenId: BigNumber;
         highestBidder: string;
@@ -444,12 +449,12 @@ export interface Auction extends BaseContract {
 
     getAuctionList(
       overrides?: CallOverrides
-    ): Promise<[BigNumber[], Auction.AuctionItemStructOutput[]]>;
+    ): Promise<[Auction.AuctionItemStructOutput[]]>;
 
     getAuctionsOfSeller(
       _seller: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<[BigNumber[], Auction.AuctionItemStructOutput[]]>;
+    ): Promise<[Auction.AuctionItemStructOutput[]]>;
 
     getCurrentAuctionId(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -479,6 +484,7 @@ export interface Auction extends BaseContract {
     overrides?: CallOverrides
   ): Promise<
     [
+      BigNumber,
       string,
       BigNumber,
       string,
@@ -491,6 +497,7 @@ export interface Auction extends BaseContract {
       boolean,
       boolean
     ] & {
+      id: BigNumber;
       seller: string;
       nftTokenId: BigNumber;
       highestBidder: string;
@@ -547,12 +554,12 @@ export interface Auction extends BaseContract {
 
   getAuctionList(
     overrides?: CallOverrides
-  ): Promise<[BigNumber[], Auction.AuctionItemStructOutput[]]>;
+  ): Promise<Auction.AuctionItemStructOutput[]>;
 
   getAuctionsOfSeller(
     _seller: PromiseOrValue<string>,
     overrides?: CallOverrides
-  ): Promise<[BigNumber[], Auction.AuctionItemStructOutput[]]>;
+  ): Promise<Auction.AuctionItemStructOutput[]>;
 
   getCurrentAuctionId(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -582,6 +589,7 @@ export interface Auction extends BaseContract {
       overrides?: CallOverrides
     ): Promise<
       [
+        BigNumber,
         string,
         BigNumber,
         string,
@@ -594,6 +602,7 @@ export interface Auction extends BaseContract {
         boolean,
         boolean
       ] & {
+        id: BigNumber;
         seller: string;
         nftTokenId: BigNumber;
         highestBidder: string;
@@ -650,12 +659,12 @@ export interface Auction extends BaseContract {
 
     getAuctionList(
       overrides?: CallOverrides
-    ): Promise<[BigNumber[], Auction.AuctionItemStructOutput[]]>;
+    ): Promise<Auction.AuctionItemStructOutput[]>;
 
     getAuctionsOfSeller(
       _seller: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<[BigNumber[], Auction.AuctionItemStructOutput[]]>;
+    ): Promise<Auction.AuctionItemStructOutput[]>;
 
     getCurrentAuctionId(overrides?: CallOverrides): Promise<BigNumber>;
 

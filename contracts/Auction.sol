@@ -31,6 +31,7 @@ contract Auction {
 
   // Creating a struct to identify an auction item
   struct AuctionItem {
+    uint256 id;
     address payable seller;
     uint256 nftTokenId;
     // mapping(address => uint256) bids;
@@ -111,28 +112,22 @@ contract Auction {
   }
 
   // Returns all auction items
-  function getAuctionList()
-    external
-    view
-    returns (uint256[] memory, AuctionItem[] memory)
-  {
+  function getAuctionList() external view returns (AuctionItem[] memory) {
     uint256 currentAuctionId = getCurrentAuctionId();
     AuctionItem[] memory _auctionList = new AuctionItem[](currentAuctionId);
-    uint256[] memory auctionIdList = new uint256[](currentAuctionId);
 
     for (uint256 i = 0; i < currentAuctionId; i++) {
       _auctionList[i] = auctions[i];
-      auctionIdList[i] = i;
     }
 
-    return (auctionIdList, _auctionList);
+    return _auctionList;
   }
 
   // Returns all auction items for a specific seller
   function getAuctionsOfSeller(address _seller)
     external
     view
-    returns (uint256[] memory, AuctionItem[] memory)
+    returns (AuctionItem[] memory)
   {
     AuctionItem[] memory _auctionList = new AuctionItem[](
       _auctionIdCounter.current()
@@ -147,14 +142,12 @@ contract Auction {
     }
 
     AuctionItem[] memory _auctionListTrimmed = new AuctionItem[](_auctionCount);
-    uint256[] memory auctionIdList = new uint256[](_auctionCount);
 
     for (uint256 i = 0; i < _auctionCount; i++) {
       _auctionListTrimmed[i] = _auctionList[i];
-      auctionIdList[i] = i;
     }
 
-    return (auctionIdList, _auctionListTrimmed);
+    return _auctionListTrimmed;
   }
 
   function createAuction(
@@ -174,6 +167,7 @@ contract Auction {
     contractAddress.transferFrom(msg.sender, address(this), _nftTokenId);
 
     auctions[auctionId] = AuctionItem(
+      auctionId,
       payable(msg.sender),
       _nftTokenId,
       address(0),
@@ -383,7 +377,7 @@ contract Auction {
   }
 
   function withdrawCut() external onlyOwner {
-    (bool success, ) = owner.call{value: ownerBalance}('');
+    (bool success, ) = owner.call{ value: ownerBalance }('');
     require(success, 'Transfer failed.');
     ownerBalance = 0;
   }
