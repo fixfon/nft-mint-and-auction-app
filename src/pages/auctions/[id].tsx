@@ -6,17 +6,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import AuctionDetails from '../../components/auctions/AuctionDetails';
 import { AiFillCloseCircle } from 'react-icons/ai';
-
-type Item = {
-  auctionId: string;
-  nftTokenId: number;
-  highestBid: number;
-  buyNowPrice: number;
-  endAt: number;
-  isSold: boolean;
-  isCanceled: boolean;
-  isEnded: boolean;
-};
+import { Item } from '../../types/Item';
 
 const AuctionItem: NextPage = () => {
   const [mounted, setMounted] = useState(false);

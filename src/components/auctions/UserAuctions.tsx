@@ -6,21 +6,11 @@ import Image from 'next/image';
 import { ethers } from 'ethers';
 import moment from 'moment';
 import { useRouter } from 'next/router';
+import { Item } from '../../types/Item';
 
 const auctionContractConfig = {
   address: AuctionContract,
   abi: auctionABI.abi,
-};
-
-type AuctionItem = {
-  auctionId: string;
-  nftTokenId: number;
-  highestBid: number;
-  buyNowPrice: number;
-  endAt: number;
-  isSold: boolean;
-  isCanceled: boolean;
-  isEnded: boolean;
 };
 
 const UserAuctions = () => {
@@ -30,7 +20,7 @@ const UserAuctions = () => {
     setCurrentTime(Date.now());
   }, []);
 
-  const [auctionList, setAuctionList] = useState<AuctionItem[]>([]);
+  const [auctionList, setAuctionList] = useState<Item[]>([]);
   const [currentTime, setCurrentTime] = useState<number>();
   const { address, isConnected } = useAccount();
   const router = useRouter();

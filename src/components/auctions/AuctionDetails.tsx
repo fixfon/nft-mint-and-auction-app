@@ -4,17 +4,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useContractRead } from 'wagmi';
 import { AuctionContract } from '../../../contractAddress';
-
-type Item = {
-  auctionId: string;
-  nftTokenId: number;
-  highestBid: number;
-  buyNowPrice: number;
-  endAt: number;
-  isSold: boolean;
-  isCanceled: boolean;
-  isEnded: boolean;
-};
+import { Item } from '../../types/Item';
 
 interface AuctionDetailsProps {
   item: Item;
