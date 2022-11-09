@@ -289,14 +289,6 @@ contract Auction {
       getAuction(_auctionId).seller != address(0),
       'Auction does not exist'
     );
-    AuctionItem memory _auction = auctions[_auctionId];
-
-    if (_auction.isCanceled == false) {
-      require(
-        msg.sender != _auction.highestBidder,
-        'You are the highest bidder.'
-      );
-    }
 
     uint256 _amount = bidList[_auctionId][msg.sender];
     require(_amount > 0, 'You have no bid to withdraw.');
