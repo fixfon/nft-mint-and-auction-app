@@ -112,7 +112,7 @@ const Auctions = () => {
     functionName: 'getAuctionList',
     watch: false,
     enabled: !!currentAuctionIdData && currentAuctionIdData > 0,
-    onSuccess: (data) => {
+    onSuccess: () => {
       if (auctionListData) {
         auctionListData.map((auctionItem) => {
           if (
@@ -124,8 +124,16 @@ const Auctions = () => {
           const auctionItemData = {
             auctionId: auctionItem.id.toString(),
             nftTokenId: Number(auctionItem.nftTokenId.toString()),
-            highestBid: Number(auctionItem.highestBid.toString()),
-            buyNowPrice: Number(auctionItem.buyNowPrice.toString()),
+            seller: auctionItem.seller,
+            startPrice: ethers.utils.formatEther(
+              auctionItem.startPrice.toString()
+            ),
+            highestBid: ethers.utils.formatEther(
+              auctionItem.highestBid.toString()
+            ),
+            buyNowPrice: ethers.utils.formatEther(
+              auctionItem.buyNowPrice.toString()
+            ),
             endAt: Number(auctionItem.endAt.toString()),
             isSold: auctionItem.isSold,
             isCanceled: auctionItem.isCanceled,
@@ -145,14 +153,14 @@ const Auctions = () => {
     <>
       {mounted && (
         <div className="flex flex-col items-center justify-center">
-          <div className="grid grid-cols-1 place-items-center gap-4 md:grid-cols-3">
+          <div className="grid grid-cols-1 mt-8 place-items-center gap-4 md:grid-cols-3">
             {auctionList.length > 0 &&
               auctionList.map((auction, index) => {
                 return (
                   <div
                     onClick={() => handleAuctionSelect(auction.auctionId)}
                     key={index}
-                    className="flex w-48 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-neutral bg-highlight p-3 backdrop-blur-lg transition-transform hover:scale-105"
+                    className="flex min-h-full min-w-[192px] cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-neutral bg-highlight p-3 backdrop-blur-lg transition-transform hover:scale-105"
                   >
                     <h2 className="mb-2 text-xl font-semibold text-white">
                       Patika Bears #{auction.nftTokenId}
@@ -164,14 +172,10 @@ const Auctions = () => {
                       src={`/images/${auction.nftTokenId}.png`}
                     />
                     <p className="mt-2 text-lg text-neutral">
-                      Highest Bid{' '}
-                      {ethers.utils.formatEther(auction.highestBid.toString())}{' '}
-                      ETH
+                      Highest Bid {auction.highestBid} ETH
                     </p>
                     <p className="text-lg text-neutral">
-                      Buy Now{' '}
-                      {ethers.utils.formatEther(auction.buyNowPrice.toString())}{' '}
-                      ETH
+                      Buy Now {auction.buyNowPrice} ETH
                     </p>
                     {auction.isEnded ? (
                       <p className="mt-3 text-lg text-neutral">Ended</p>

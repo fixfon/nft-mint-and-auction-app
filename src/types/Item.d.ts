@@ -1,8 +1,10 @@
 export type Item = {
   auctionId: string;
   nftTokenId: number;
-  highestBid: number;
-  buyNowPrice: number;
+  seller: string;
+  startPrice: string;
+  highestBid: string;
+  buyNowPrice: string;
   endAt: number;
   isSold: boolean;
   isCanceled: boolean;
