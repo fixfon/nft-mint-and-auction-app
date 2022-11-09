@@ -6,7 +6,7 @@ const Header = () => {
     <header className="bg-secondary">
       <div className="container mx-auto flex items-center justify-between p-4">
         <h1 className="rounded-xl py-1 px-3 text-4xl font-bold text-complementary shadow-neutral [transition:color_.5s_ease-in-out,box-shadow_.5s_ease-in-out] hover:text-highlight-300 hover:shadow-hover">
-          <a href="/">PatikaBears</a>
+          <Link href="/">PatikaBears</Link>
         </h1>
         <nav className="flex items-center gap-10">
           <ul className="flex gap-6 text-2xl font-semibold">

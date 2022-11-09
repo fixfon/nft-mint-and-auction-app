@@ -34,7 +34,7 @@ const wagmiClient = createClient({
   webSocketProvider,
 });
 
-const MyApp: AppType<{}> = ({ Component, pageProps: { ...pageProps } }) => {
+const MyApp: AppType = ({ Component, pageProps: { ...pageProps } }) => {
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider appInfo={appInfo} chains={chains}>
