@@ -21,7 +21,7 @@ const CreateAuction = ({
     startPrice: 0.0,
     buyNowPrice: 0.0,
   });
-  const { isConnected, address } = useAccount();
+  const { isConnected } = useAccount();
 
   const { config: approvalConfig } = usePrepareContractWrite({
     address: PatikaBearsContract,
@@ -50,7 +50,6 @@ const CreateAuction = ({
   });
 
   const {
-    data: approveData,
     isLoading: isApproving,
     isSuccess: isApproved,
     write: approveFunction,
@@ -95,7 +94,6 @@ const CreateAuction = ({
   });
 
   const {
-    data: createAuctionData,
     isLoading: isAuctionCreating,
     isSuccess: isAuctionCreated,
     write: createAuctionFunction,
@@ -107,9 +105,7 @@ const CreateAuction = ({
     if (
       e.target.elements.startPrice.value < e.target.elements.buyNowPrice.value
     ) {
-      console.log('approving token');
       approveFunction?.();
-      console.log(selectedTokenId);
     }
     const form = {
       startPrice: parseFloat(e.target.startPrice.value),
@@ -118,11 +114,12 @@ const CreateAuction = ({
     setAuctionForm(form);
   };
 
-  useEffect(() => {
-    if (isApproved) {
-      createAuctionFunction?.();
-    }
-  }, [isApproved]);
+  // useEffect(() => {
+  //   console.log(isApproved);
+  //   if (isApproved) {
+  //     createAuctionFunction?.();
+  //   }
+  // }, [isApproved]);
 
   return (
     <>
@@ -156,6 +153,7 @@ const CreateAuction = ({
                 Enter Starting Price (ETH)
               </label>
               <input
+                disabled={isApproving || isApproved || isAuctionCreating}
                 className="rounded-xl border-2 border-slate-600 px-2 text-complementary"
                 name="startPrice"
                 required
@@ -167,6 +165,7 @@ const CreateAuction = ({
                 Enter Buy Now Price (ETH)
               </label>
               <input
+                disabled={isApproving || isApproved || isAuctionCreating}
                 className="rounded-xl border-2 border-slate-600 px-2 text-complementary"
                 name="buyNowPrice"
                 required
@@ -175,12 +174,22 @@ const CreateAuction = ({
                 type="number"
               />
               <button
-                disabled={!isConnected && isApproving && isAuctionCreating}
+                disabled={!isConnected || isApproving || isApproved}
                 className="mt-4 rounded-3xl border-2 border-neutral bg-primary py-2 px-4 font-semibold text-neutral transition-all hover:scale-105 disabled:cursor-not-allowed disabled:border-none disabled:opacity-70 disabled:hover:scale-100"
                 type="submit"
               >
-                Create Auction
+                Approve Token
               </button>
+              {!isApproving && isApproved && (
+                <button
+                  disabled={!isConnected || isAuctionCreating}
+                  className="mt-4 rounded-3xl border-2 border-neutral bg-primary py-2 px-4 font-semibold text-neutral transition-all hover:scale-105 disabled:cursor-not-allowed disabled:border-none disabled:opacity-70 disabled:hover:scale-100"
+                  type="button"
+                  onClick={() => createAuctionFunction?.()}
+                >
+                  Create Auction
+                </button>
+              )}
             </form>
           )}
           {isAuctionCreating && (
@@ -195,12 +204,12 @@ const CreateAuction = ({
           )}
           {aprroveError && (
             <p className="text-lg font-semibold text-red-600">
-              An error ocurred while transferring the ownership of the NFT
+              An error ocurred while transferring the ownership of the NFT!
             </p>
           )}
           {createAuctionError && (
             <p className="text-lg font-semibold text-red-600">
-              An error ocurred while creating the auction
+              An error ocurred while creating the auction!
             </p>
           )}
         </div>
