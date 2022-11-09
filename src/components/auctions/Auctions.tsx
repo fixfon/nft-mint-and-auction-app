@@ -110,7 +110,7 @@ const Auctions = () => {
       },
     ],
     functionName: 'getAuctionList',
-    watch: false,
+    watch: true,
     enabled: !!currentAuctionIdData && currentAuctionIdData > 0,
     onSuccess: () => {
       if (auctionListData) {
@@ -153,7 +153,7 @@ const Auctions = () => {
     <>
       {mounted && (
         <div className="flex flex-col items-center justify-center">
-          <div className="grid grid-cols-1 mt-8 place-items-center gap-4 md:grid-cols-3">
+          <div className="mt-8 grid grid-cols-1 place-items-center gap-4 md:grid-cols-3">
             {auctionList.length > 0 &&
               auctionList.map((auction, index) => {
                 return (
