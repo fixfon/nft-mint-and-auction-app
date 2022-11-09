@@ -17,6 +17,9 @@ This project is a NFT minting and auction platform. the PatikaBears NFT collecti
 - [x] 9. Create UI for viewing NFTs.
 - [x] 10. Create UI for auctioning and bidding NFTs.
 - [x] 11. Create UI for viewing auctions and biddings.
+- [x] 12. Fix bugs and fix wagmi query bugs.
+- [x] 13. Re-create all the UI and refactor the code.
+- [x] 14. Add refund, cancel, end auction features.
 
 ## User Guide
 
@@ -38,7 +41,6 @@ Create a `.env` file in the root directory and copy environment variables from .
 ```bash
 ALCHEMY_GOERLI_ENDPOINT=
 DEPLOYER_PRIVATE_KEY=
-MORALIS_API_KEY=
 ALCHEMY_API_KEY=
 ETHERSCAN_API_KEY=
 ```
@@ -71,7 +73,6 @@ npx hardhat run ./scripts/deploy.ts --network alchemy
 ```bash
 npx hardhat verify --network alchemy DEPLOYED_NFT_CONTRACT_ADDRESS
 npx hardhat verify --network alchemy DEPLOYED_AUCTION_CONTRACT_ADDRESS "DEPLOYED_NFT_CONTRACT_ADDRESS"
-```
 ```
 
 ### How to run the project
