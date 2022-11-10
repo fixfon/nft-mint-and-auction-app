@@ -1,7 +1,12 @@
 import { ethers } from 'ethers';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi';
+import {
+  useAccount,
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from 'wagmi';
 import { AuctionContract, PatikaBearsContract } from '../../../contractAddress';
 import { AiFillCloseCircle } from 'react-icons/ai';
 
@@ -50,11 +55,21 @@ const CreateAuction = ({
   });
 
   const {
+    data: approvalData,
     isLoading: isApproving,
     isSuccess: isApproved,
     write: approveFunction,
     error: aprroveError,
   } = useContractWrite({ ...approvalConfig });
+
+  const {
+    isSuccess: txApproveSuccess,
+    isLoading: isTxApproveLoading,
+    error: txApproveError,
+  } = useWaitForTransaction({
+    hash: approvalData?.hash,
+    enabled: !!approvalData,
+  });
 
   const { config: createAuctionConfig } = usePrepareContractWrite({
     address: AuctionContract,
@@ -85,7 +100,9 @@ const CreateAuction = ({
     ],
     functionName: 'createAuction',
     enabled:
-      isApproved && auctionForm.buyNowPrice > 0 && auctionForm.startPrice > 0,
+      txApproveSuccess &&
+      auctionForm.buyNowPrice > 0 &&
+      auctionForm.startPrice > 0,
     args: [
       ethers.BigNumber.from(selectedTokenId),
       ethers.utils.parseEther(auctionForm.startPrice.toString()),
@@ -94,11 +111,21 @@ const CreateAuction = ({
   });
 
   const {
+    data: createAuctionData,
     isLoading: isAuctionCreating,
     isSuccess: isAuctionCreated,
     write: createAuctionFunction,
     error: createAuctionError,
   } = useContractWrite({ ...createAuctionConfig });
+
+  const {
+    isSuccess: txCreateSuccess,
+    isLoading: isTxCreateLoading,
+    error: txCreateError,
+  } = useWaitForTransaction({
+    hash: createAuctionData?.hash,
+    enabled: !!createAuctionData,
+  });
 
   const handleCreateAuction = (e: any) => {
     e.preventDefault();
@@ -113,13 +140,6 @@ const CreateAuction = ({
     };
     setAuctionForm(form);
   };
-
-  // useEffect(() => {
-  //   console.log(isApproved);
-  //   if (isApproved) {
-  //     createAuctionFunction?.();
-  //   }
-  // }, [isApproved]);
 
   return (
     <>
@@ -138,51 +158,61 @@ const CreateAuction = ({
             className="select-none rounded-xl"
             src={`/images/${selectedTokenId}.png`}
           />
-          {isAuctionCreated ? (
+          {txCreateSuccess ? (
             <div>
               <h1 className="text-center text-2xl font-semibold text-green-600">
                 Auction Created Successfully
               </h1>
             </div>
           ) : (
-            <form
-              className="flex flex-col items-center justify-center text-neutral"
-              onSubmit={handleCreateAuction}
-            >
-              <label className="py-2 font-semibold">
-                Enter Starting Price (ETH)
-              </label>
-              <input
-                disabled={isApproving || isApproved || isAuctionCreating}
-                className="rounded-xl border-2 border-slate-600 px-2 text-complementary"
-                name="startPrice"
-                required
-                step="0.001"
-                min="0.001"
-                type="number"
-              />
-              <label className="py-2 pt-4 font-semibold">
-                Enter Buy Now Price (ETH)
-              </label>
-              <input
-                disabled={isApproving || isApproved || isAuctionCreating}
-                className="rounded-xl border-2 border-slate-600 px-2 text-complementary"
-                name="buyNowPrice"
-                required
-                step="0.001"
-                min="0.001"
-                type="number"
-              />
-              <button
-                disabled={!isConnected || isApproving || isApproved}
-                className="mt-4 rounded-3xl border-2 border-neutral bg-primary py-2 px-4 font-semibold text-neutral transition-all hover:scale-105 disabled:cursor-not-allowed disabled:border-none disabled:opacity-70 disabled:hover:scale-100"
-                type="submit"
+            <div className="flex flex-col items-center justify-center">
+              <form
+                className="flex flex-col items-center justify-center text-neutral"
+                onSubmit={handleCreateAuction}
               >
-                Approve Token
-              </button>
-              {!isApproving && isApproved && (
+                <label className="py-2 font-semibold">
+                  Enter Starting Price (ETH)
+                </label>
+                <input
+                  disabled={isApproving || isApproved || isAuctionCreating}
+                  className="rounded-xl border-2 border-slate-600 px-2 text-complementary"
+                  name="startPrice"
+                  required
+                  step="0.001"
+                  min="0.001"
+                  type="number"
+                />
+                <label className="py-2 pt-4 font-semibold">
+                  Enter Buy Now Price (ETH)
+                </label>
+                <input
+                  disabled={isApproving || isApproved || isAuctionCreating}
+                  className="rounded-xl border-2 border-slate-600 px-2 text-complementary"
+                  name="buyNowPrice"
+                  required
+                  step="0.001"
+                  min="0.001"
+                  type="number"
+                />
                 <button
-                  disabled={!isConnected || isAuctionCreating}
+                  disabled={
+                    !isConnected ||
+                    isApproving ||
+                    isApproved ||
+                    isTxApproveLoading ||
+                    txApproveSuccess
+                  }
+                  className="mt-4 rounded-3xl border-2 border-neutral bg-primary py-2 px-4 font-semibold text-neutral transition-all hover:scale-105 disabled:cursor-not-allowed disabled:border-none disabled:opacity-70 disabled:hover:scale-100"
+                  type="submit"
+                >
+                  Approve Token
+                </button>
+              </form>
+              {txApproveSuccess && (
+                <button
+                  disabled={
+                    !isConnected || isAuctionCreating || isTxCreateLoading
+                  }
                   className="mt-4 rounded-3xl border-2 border-neutral bg-primary py-2 px-4 font-semibold text-neutral transition-all hover:scale-105 disabled:cursor-not-allowed disabled:border-none disabled:opacity-70 disabled:hover:scale-100"
                   type="button"
                   onClick={() => createAuctionFunction?.()}
@@ -190,16 +220,26 @@ const CreateAuction = ({
                   Create Auction
                 </button>
               )}
-            </form>
+            </div>
+          )}
+          {isApproving && (
+            <p className="text-center text-xl font-semibold text-green-600">
+              Approving Token...
+            </p>
+          )}
+          {isTxApproveLoading && (
+            <p className="text-center text-xl font-semibold text-green-600">
+              Waiting for Approving Transaction...
+            </p>
           )}
           {isAuctionCreating && (
             <p className="text-center text-xl font-semibold text-green-600">
               Creating Auction...
             </p>
           )}
-          {isApproving && (
+          {isTxCreateLoading && (
             <p className="text-center text-xl font-semibold text-green-600">
-              Approving Token...
+              Waiting for Creating Auction Transaction...
             </p>
           )}
           {aprroveError && (
@@ -207,9 +247,21 @@ const CreateAuction = ({
               An error ocurred while transferring the ownership of the NFT!
             </p>
           )}
+          {txApproveError && (
+            <p className="text-lg font-semibold text-red-600">
+              An error ocurred with the transaction in the chain while approving
+              the token!
+            </p>
+          )}
           {createAuctionError && (
             <p className="text-lg font-semibold text-red-600">
               An error ocurred while creating the auction!
+            </p>
+          )}
+          {txCreateError && (
+            <p className="text-lg font-semibold text-red-600">
+              An error ocurred with the transaction in the chain while creating
+              the auction!
             </p>
           )}
         </div>

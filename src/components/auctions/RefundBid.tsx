@@ -1,6 +1,11 @@
 import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
-import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi';
+import {
+  useAccount,
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from 'wagmi';
 import { AuctionContract } from '../../../contractAddress';
 import { Item } from '../../types/Item';
 
@@ -39,11 +44,21 @@ const RefundBid = ({ item }: RefundBidProps) => {
   });
 
   const {
+    data: refundBidData,
     isLoading: isRefundingBid,
     isSuccess: isRefundedBid,
     write: refundBidFunction,
     error: refundBidError,
   } = useContractWrite({ ...refundBidConfig });
+
+  const {
+    isSuccess: isTxSucess,
+    isLoading: isTxLoading,
+    error: txError,
+  } = useWaitForTransaction({
+    hash: refundBidData?.hash,
+    enabled: !!refundBidData,
+  });
 
   return (
     <>
@@ -52,14 +67,23 @@ const RefundBid = ({ item }: RefundBidProps) => {
           <button
             type="button"
             disabled={
-              isRefundingBid || !isConnected || isRefundedBid || !item.isEnded
+              isRefundingBid ||
+              !isConnected ||
+              isRefundedBid ||
+              isTxLoading ||
+              !item.isEnded
             }
             className="rounded-xl border-2 bg-highlight py-2 px-4 text-lg font-semibold text-neutral transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:bg-opacity-40"
             onClick={() => refundBidFunction?.()}
           >
             {isRefundingBid ? 'Refunding Your Bid...' : 'Refund Your Bid'}
           </button>
-          {isRefundedBid && (
+          {isTxLoading && (
+            <div className="text-lg font-semibold text-highlight">
+              Waiting for transaction...
+            </div>
+          )}
+          {isTxSucess && (
             <div className="text-lg font-semibold text-highlight">
               Your bid has been refunded!
             </div>
@@ -67,6 +91,11 @@ const RefundBid = ({ item }: RefundBidProps) => {
           {refundBidError && (
             <div className="text-lg font-semibold text-red-500">
               Error while refunding your bid!
+            </div>
+          )}
+          {txError && (
+            <div className="text-lg font-semibold text-red-500">
+              Transaction error while refunding your bid!
             </div>
           )}
         </div>

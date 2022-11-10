@@ -1,6 +1,11 @@
 import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
-import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi';
+import {
+  useAccount,
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from 'wagmi';
 import { AuctionContract } from '../../../contractAddress';
 import { Item } from '../../types/Item';
 
@@ -35,8 +40,7 @@ const BidAuction = ({ item }: BidAuctionProps) => {
       },
     ],
     functionName: 'bid',
-    enabled:
-      bidAmount > '0' && !!item && !item.isEnded && mounted && isConnected,
+    enabled: !!item && !item.isEnded && mounted && isConnected,
     args: [ethers.BigNumber.from(item?.auctionId)],
     overrides: {
       value: ethers.utils.parseEther(bidAmount),
@@ -44,17 +48,33 @@ const BidAuction = ({ item }: BidAuctionProps) => {
   });
 
   const {
+    data: placeBidData,
     isLoading: isPlacingBid,
     isSuccess: isPlacedBid,
     write: placeBidFunction,
     error: placeBidError,
   } = useContractWrite({ ...placeBidConfig });
 
+  const {
+    isSuccess: isTxSucess,
+    isLoading: isTxLoading,
+    error: txError,
+  } = useWaitForTransaction({
+    hash: placeBidData?.hash,
+    enabled: !!placeBidData,
+  });
+
   const handlePlaceBid = (e: any) => {
     e.preventDefault();
+    if (e.target.bidAmount.value <= '0') return;
     setBidAmount(e.target.bidAmount.value);
-    placeBidFunction?.();
   };
+
+  useEffect(() => {
+    if (bidAmount !== '0') {
+      placeBidFunction?.();
+    }
+  }, [bidAmount]);
 
   return (
     <div>
@@ -83,21 +103,30 @@ const BidAuction = ({ item }: BidAuctionProps) => {
             />
             <button
               type="submit"
-              onClick={() => placeBidFunction?.()}
-              disabled={isPlacingBid || item.isEnded || !isConnected}
+              disabled={isPlacingBid || !isConnected || isTxLoading}
               className="rounded-xl border-2 border-neutral bg-highlight px-4 py-1 font-semibold text-neutral transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:bg-opacity-40"
             >
               {isPlacingBid ? 'Placing Bid...' : 'Place Bid'}
             </button>
           </div>
-          {isPlacedBid && (
+          {isTxLoading && (
             <div className="text-xl font-semibold text-highlight">
-              Bid Placed Successfully!
+              Waiting for transaction...
+            </div>
+          )}
+          {isTxSucess && (
+            <div className="text-xl font-semibold text-highlight">
+              Placed bid successfully!
             </div>
           )}
           {placeBidError && (
             <div className="text-xl font-semibold text-red-600">
               Could not place bid!
+            </div>
+          )}
+          {txError && (
+            <div className="text-xl font-semibold text-red-600">
+              Transaction Failed!
             </div>
           )}
         </form>

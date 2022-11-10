@@ -1,7 +1,12 @@
 import { ethers } from 'ethers';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
-import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi';
+import {
+  useAccount,
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from 'wagmi';
 import { AuctionContract } from '../../../contractAddress';
 import { Item } from '../../types/Item';
 
@@ -47,11 +52,21 @@ const EndAuction = ({ item, currentTime }: EndAuctionProps) => {
   });
 
   const {
+    data: endAuctionData,
     isLoading: isEndingAuction,
     isSuccess: isEndedAuction,
     write: endAuctionFunction,
     error: endAuctionError,
   } = useContractWrite({ ...endAuctionConfig });
+
+  const {
+    isSuccess: isTxSucess,
+    isLoading: isTxLoading,
+    error: txError,
+  } = useWaitForTransaction({
+    hash: endAuctionData?.hash,
+    enabled: !!endAuctionData,
+  });
 
   return (
     <>
@@ -63,6 +78,7 @@ const EndAuction = ({ item, currentTime }: EndAuctionProps) => {
               isEndingAuction ||
               !isConnected ||
               isEndedAuction ||
+              isTxLoading ||
               item.isEnded ||
               moment(item.endAt, 'X').toISOString() >
                 moment(currentTime, 'X').toISOString()
@@ -72,7 +88,12 @@ const EndAuction = ({ item, currentTime }: EndAuctionProps) => {
           >
             {isEndingAuction ? 'Ending Auction...' : 'End Auction'}
           </button>
-          {isEndedAuction && (
+          {isTxLoading && (
+            <div className="text-lg font-semibold text-highlight">
+              Waiting for transaction...
+            </div>
+          )}
+          {isTxSucess && (
             <div className="text-lg font-semibold text-highlight">
               Auction Ended
             </div>
@@ -80,6 +101,11 @@ const EndAuction = ({ item, currentTime }: EndAuctionProps) => {
           {endAuctionError && (
             <div className="text-lg font-semibold text-red-500">
               Error while ending auction!
+            </div>
+          )}
+          {txError && (
+            <div className="text-lg font-semibold text-red-500">
+              Transaction error while ending auction!
             </div>
           )}
         </div>

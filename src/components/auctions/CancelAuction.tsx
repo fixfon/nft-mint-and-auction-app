@@ -1,7 +1,13 @@
 import { ethers } from 'ethers';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
-import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi';
+import {
+  useAccount,
+  useContractWrite,
+  usePrepareContractWrite,
+  useQueryClient,
+  useWaitForTransaction,
+} from 'wagmi';
 import { AuctionContract } from '../../../contractAddress';
 import { Item } from '../../types/Item';
 
@@ -17,6 +23,7 @@ const CancelAuction = ({ item, currentTime }: CancelAuctionProps) => {
   }, []);
 
   const { isConnected } = useAccount();
+  const queryClient = useQueryClient();
 
   const { config: cancelAuctionConfig } = usePrepareContractWrite({
     address: AuctionContract,
@@ -47,11 +54,27 @@ const CancelAuction = ({ item, currentTime }: CancelAuctionProps) => {
   });
 
   const {
+    data: cancelAuctionData,
     isLoading: isCancelingAuction,
     isSuccess: isCanceledAuction,
     write: cancelAuctionFunction,
     error: cancelAuctionError,
   } = useContractWrite({ ...cancelAuctionConfig });
+
+  const {
+    isSuccess: isTxSucess,
+    isLoading: isTxLoading,
+    error: txError,
+  } = useWaitForTransaction({
+    hash: cancelAuctionData?.hash,
+    enabled: !!cancelAuctionData,
+  });
+
+  useEffect(() => {
+    if (isTxSucess) {
+      queryClient.invalidateQueries();
+    }
+  }, [isTxSucess]);
 
   return (
     <>
@@ -63,6 +86,7 @@ const CancelAuction = ({ item, currentTime }: CancelAuctionProps) => {
               isCancelingAuction ||
               !isConnected ||
               isCanceledAuction ||
+              isTxLoading ||
               item.isEnded ||
               moment(item.endAt, 'X').toISOString() <
                 moment(currentTime, 'X').toISOString()
@@ -72,7 +96,12 @@ const CancelAuction = ({ item, currentTime }: CancelAuctionProps) => {
           >
             {isCancelingAuction ? 'Canceling Auction...' : 'Cancel Auction'}
           </button>
-          {isCanceledAuction && (
+          {isTxLoading && (
+            <div className="text-lg font-semibold text-highlight">
+              Waiting for transaction...
+            </div>
+          )}
+          {isTxSucess && (
             <div className="text-lg font-semibold text-highlight">
               Auction Canceled
             </div>
@@ -80,6 +109,11 @@ const CancelAuction = ({ item, currentTime }: CancelAuctionProps) => {
           {cancelAuctionError && (
             <div className="text-lg font-semibold text-red-500">
               Error while canceling auction!
+            </div>
+          )}
+          {txError && (
+            <div className="text-lg font-semibold text-red-500">
+              Transaction error while canceling the auction!
             </div>
           )}
         </div>

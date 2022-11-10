@@ -1,6 +1,11 @@
 import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
-import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi';
+import {
+  useAccount,
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from 'wagmi';
 import { AuctionContract } from '../../../contractAddress';
 import { Item } from '../../types/Item';
 
@@ -42,11 +47,21 @@ const BuyNowAuction = ({ item }: BuyNowAuctionProps) => {
   });
 
   const {
+    data: buyNowData,
     isLoading: isBuyNow,
     isSuccess: isBoghtNow,
     write: buyNowFunction,
     error: buyNowError,
   } = useContractWrite({ ...buyNowConfig });
+
+  const {
+    isSuccess: isTxSucess,
+    isLoading: isTxLoading,
+    error: txError,
+  } = useWaitForTransaction({
+    hash: buyNowData?.hash,
+    enabled: !!buyNowData,
+  });
 
   return (
     <>
@@ -54,7 +69,12 @@ const BuyNowAuction = ({ item }: BuyNowAuctionProps) => {
         <div>
           <button
             disabled={
-              isBuyNow || isBoghtNow || !item || item.isEnded || !isConnected
+              isBuyNow ||
+              isBoghtNow ||
+              !item ||
+              item.isEnded ||
+              !isConnected ||
+              isTxLoading
             }
             onClick={() => buyNowFunction?.()}
             type="button"
@@ -62,9 +82,19 @@ const BuyNowAuction = ({ item }: BuyNowAuctionProps) => {
           >
             {isBuyNow ? 'Buying...' : `Buy Now (${item.buyNowPrice} ETH)`}
           </button>
-          {isBoghtNow && (
+          {isTxLoading && (
+            <div className="text-lg font-semibold text-green-500">
+              Waiting for transaction...
+            </div>
+          )}
+          {isTxSucess && (
             <div className="text-lg font-semibold text-green-500">
               You bought this item!
+            </div>
+          )}
+          {txError && (
+            <div className="text-lg font-semibold text-red-500">
+              Transaction error while buying item.
             </div>
           )}
           {buyNowError && (
