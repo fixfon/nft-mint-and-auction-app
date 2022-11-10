@@ -30,7 +30,7 @@ const Auctions = () => {
     watch: true,
   });
 
-  const { data: auctionListData } = useContractRead({
+  const { data: auctionListData, isLoading } = useContractRead({
     address: AuctionContract,
     abi: [
       {
@@ -114,6 +114,7 @@ const Auctions = () => {
     enabled: !!currentAuctionIdData && currentAuctionIdData > 0,
     onSuccess: () => {
       if (auctionListData) {
+        let aList: Item[] = [];
         auctionListData.map((auctionItem) => {
           if (
             auctionList.find(
@@ -139,8 +140,11 @@ const Auctions = () => {
             isCanceled: auctionItem.isCanceled,
             isEnded: auctionItem.isEnded,
           };
-          setAuctionList((prev) => [...prev, auctionItemData]);
+          aList.push(auctionItemData);
         });
+
+        aList.reverse();
+        setAuctionList((prev) => [...prev, ...aList]);
       }
     },
   });
@@ -153,6 +157,11 @@ const Auctions = () => {
     <>
       {mounted && (
         <div className="flex flex-col items-center justify-center">
+          {isLoading && (
+            <h3 className="text-xl font-bold text-highlight">
+              Loading Auctions...
+            </h3>
+          )}
           <div className="mt-8 grid grid-cols-1 place-items-center gap-4 md:grid-cols-3">
             {auctionList.length > 0 &&
               auctionList.map((auction, index) => {
@@ -160,7 +169,7 @@ const Auctions = () => {
                   <div
                     onClick={() => handleAuctionSelect(auction.auctionId)}
                     key={index}
-                    className="flex min-h-full min-w-[192px] cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-neutral bg-highlight p-3 backdrop-blur-lg transition-transform hover:scale-105"
+                    className="flex min-h-full w-48 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-neutral bg-highlight p-3 backdrop-blur-lg transition-transform hover:scale-105"
                   >
                     <h2 className="mb-2 text-xl font-semibold text-white">
                       Patika Bears #{auction.nftTokenId}

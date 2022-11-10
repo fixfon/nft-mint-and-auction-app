@@ -31,129 +31,134 @@ const UserAuctions = () => {
     watch: true,
   });
 
-  const { data: userAuctionListData, refetch: refetchUserAuctionList } =
-    useContractRead({
-      address: AuctionContract,
-      abi: [
-        {
-          inputs: [
-            {
-              internalType: 'address',
-              name: '_seller',
-              type: 'address',
-            },
-          ],
-          name: 'getAuctionsOfSeller',
-          outputs: [
-            {
-              components: [
-                {
-                  internalType: 'uint256',
-                  name: 'id',
-                  type: 'uint256',
-                },
-                {
-                  internalType: 'address payable',
-                  name: 'seller',
-                  type: 'address',
-                },
-                {
-                  internalType: 'uint256',
-                  name: 'nftTokenId',
-                  type: 'uint256',
-                },
-                {
-                  internalType: 'address',
-                  name: 'highestBidder',
-                  type: 'address',
-                },
-                {
-                  internalType: 'uint256',
-                  name: 'highestBid',
-                  type: 'uint256',
-                },
-                {
-                  internalType: 'uint256',
-                  name: 'startPrice',
-                  type: 'uint256',
-                },
-                {
-                  internalType: 'uint256',
-                  name: 'buyNowPrice',
-                  type: 'uint256',
-                },
-                {
-                  internalType: 'uint256',
-                  name: 'startedAt',
-                  type: 'uint256',
-                },
-                {
-                  internalType: 'uint256',
-                  name: 'endAt',
-                  type: 'uint256',
-                },
-                {
-                  internalType: 'bool',
-                  name: 'isSold',
-                  type: 'bool',
-                },
-                {
-                  internalType: 'bool',
-                  name: 'isEnded',
-                  type: 'bool',
-                },
-                {
-                  internalType: 'bool',
-                  name: 'isCanceled',
-                  type: 'bool',
-                },
-              ],
-              internalType: 'struct Auction.AuctionItem[]',
-              name: '',
-              type: 'tuple[]',
-            },
-          ],
-          stateMutability: 'view',
-          type: 'function',
-        },
-      ],
-      args: [address!],
-      functionName: 'getAuctionsOfSeller',
-      watch: true,
-      enabled:
-        !!currentAuctionIdData && currentAuctionIdData > 0 && isConnected,
-      onSuccess: () => {
-        if (userAuctionListData) {
-          userAuctionListData.map((auctionItem) => {
-            if (
-              auctionList.find(
-                (auction) => auction.auctionId === auctionItem.id.toString()
-              )
-            )
-              return;
-            const auctionItemData = {
-              auctionId: auctionItem.id.toString(),
-              nftTokenId: Number(auctionItem.nftTokenId.toString()),
-              seller: auctionItem.seller,
-              startPrice: ethers.utils.formatEther(
-                auctionItem.startPrice.toString()
-              ),
-              highestBid: ethers.utils.formatEther(
-                auctionItem.highestBid.toString()
-              ),
-              buyNowPrice: ethers.utils.formatEther(
-                auctionItem.buyNowPrice.toString()
-              ),
-              endAt: Number(auctionItem.endAt.toString()),
-              isSold: auctionItem.isSold,
-              isCanceled: auctionItem.isCanceled,
-              isEnded: auctionItem.isEnded,
-            };
-            setAuctionList((prev) => [...prev, auctionItemData]);
-          });
-        }
+  const {
+    data: userAuctionListData,
+    isLoading,
+    refetch: refetchUserAuctionList,
+  } = useContractRead({
+    address: AuctionContract,
+    abi: [
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: '_seller',
+            type: 'address',
+          },
+        ],
+        name: 'getAuctionsOfSeller',
+        outputs: [
+          {
+            components: [
+              {
+                internalType: 'uint256',
+                name: 'id',
+                type: 'uint256',
+              },
+              {
+                internalType: 'address payable',
+                name: 'seller',
+                type: 'address',
+              },
+              {
+                internalType: 'uint256',
+                name: 'nftTokenId',
+                type: 'uint256',
+              },
+              {
+                internalType: 'address',
+                name: 'highestBidder',
+                type: 'address',
+              },
+              {
+                internalType: 'uint256',
+                name: 'highestBid',
+                type: 'uint256',
+              },
+              {
+                internalType: 'uint256',
+                name: 'startPrice',
+                type: 'uint256',
+              },
+              {
+                internalType: 'uint256',
+                name: 'buyNowPrice',
+                type: 'uint256',
+              },
+              {
+                internalType: 'uint256',
+                name: 'startedAt',
+                type: 'uint256',
+              },
+              {
+                internalType: 'uint256',
+                name: 'endAt',
+                type: 'uint256',
+              },
+              {
+                internalType: 'bool',
+                name: 'isSold',
+                type: 'bool',
+              },
+              {
+                internalType: 'bool',
+                name: 'isEnded',
+                type: 'bool',
+              },
+              {
+                internalType: 'bool',
+                name: 'isCanceled',
+                type: 'bool',
+              },
+            ],
+            internalType: 'struct Auction.AuctionItem[]',
+            name: '',
+            type: 'tuple[]',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
       },
-    });
+    ],
+    args: [address!],
+    functionName: 'getAuctionsOfSeller',
+    watch: true,
+    enabled: !!currentAuctionIdData && currentAuctionIdData > 0 && isConnected,
+    onSuccess: () => {
+      if (userAuctionListData) {
+        let aList: Item[] = [];
+        userAuctionListData.map((auctionItem) => {
+          if (
+            auctionList.find(
+              (auction) => auction.auctionId === auctionItem.id.toString()
+            )
+          )
+            return;
+          const auctionItemData = {
+            auctionId: auctionItem.id.toString(),
+            nftTokenId: Number(auctionItem.nftTokenId.toString()),
+            seller: auctionItem.seller,
+            startPrice: ethers.utils.formatEther(
+              auctionItem.startPrice.toString()
+            ),
+            highestBid: ethers.utils.formatEther(
+              auctionItem.highestBid.toString()
+            ),
+            buyNowPrice: ethers.utils.formatEther(
+              auctionItem.buyNowPrice.toString()
+            ),
+            endAt: Number(auctionItem.endAt.toString()),
+            isSold: auctionItem.isSold,
+            isCanceled: auctionItem.isCanceled,
+            isEnded: auctionItem.isEnded,
+          };
+          aList.push(auctionItemData);
+        });
+        aList.reverse();
+        setAuctionList((prev) => [...prev, ...aList]);
+      }
+    },
+  });
 
   useEffect(() => {
     if (isConnected && mounted && address) {
@@ -172,6 +177,11 @@ const UserAuctions = () => {
           <h1 className="mb-8 text-3xl font-bold text-highlight">
             Your Auctions
           </h1>
+          {isLoading && (
+            <h3 className="text-xl font-bold text-highlight">
+              Loading Auctions...
+            </h3>
+          )}
           <div className="mt-8 grid grid-cols-1 place-items-center gap-4 md:grid-cols-3">
             {auctionList.length > 0 &&
               auctionList.map((auction, index) => {
