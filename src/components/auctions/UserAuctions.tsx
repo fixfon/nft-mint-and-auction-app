@@ -126,7 +126,7 @@ const UserAuctions = () => {
     enabled: !!currentAuctionIdData && currentAuctionIdData > 0 && isConnected,
     onSuccess: () => {
       if (userAuctionListData) {
-        let aList: Item[] = [];
+        const aList: Item[] = [];
         userAuctionListData.map((auctionItem) => {
           if (
             auctionList.find(

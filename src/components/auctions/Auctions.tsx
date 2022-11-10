@@ -114,7 +114,7 @@ const Auctions = () => {
     enabled: !!currentAuctionIdData && currentAuctionIdData > 0,
     onSuccess: () => {
       if (auctionListData) {
-        let aList: Item[] = [];
+        const aList: Item[] = [];
         auctionListData.map((auctionItem) => {
           if (
             auctionList.find(
