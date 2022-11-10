@@ -1,5 +1,23 @@
 # Patika | Akbank Web 3 Practium Final Case
 
+## DEMO
+
+[Deployed on VERCEL](https://patikabears-nft-mint-auction.vercel.app/)
+Note: This is only a demo. The contract is deployed on the Goerli test network. Therefore, you can mint and create auctions only on the testnet.
+
+## Feature Tab
+
+| Feature        | Description                                  |
+| -------------- | -------------------------------------------- |
+| Mint NFT       | Mint NFT with a unique name and description. |
+| Create Auction | Create an auction for your NFT.              |
+| Bid            | Bid on an auction.                           |
+| Buy Now        | Buy the NFT with paying full amount.         |
+| Refund         | Withdraw your bid.                           |
+| End Auction    | End the auction.                             |
+| Cancel Auction | Cancel your auction before it ends.          |
+| Withdraw Funds | Withdraw your funds.                         |
+
 ## NFT Minting & Auction Platform
 
 This project is a NFT minting and auction platform. the PatikaBears NFT collection is for Auctioning and it is mintable by everyone with 0.02ETH. After minting a NFT you can auction your NFTs, or you can bid or buy other auctions. It is a decentralized application that runs on the Ethereum blockchain. It is built with Solidity, NextJS. It is compiled and tested with Hardhat, Ethers, Waffle, and Hardhat toolkits.
