@@ -1,8 +1,10 @@
 # Patika | Akbank Web 3 Practium Final Case
 
-## DEMO
+### [>>LIVE DEMO<<](https://patikabears-nft-mint-auction.vercel.app/)
 
-[Deployed on VERCEL](https://patikabears-nft-mint-auction.vercel.app/)
+<center>
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/iBkUZXmAE48?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center>
+
 Note: This is only a demo. The contract is deployed on the Goerli test network. Therefore, you can mint and create auctions only on the testnet.
 
 ## Feature Tab
