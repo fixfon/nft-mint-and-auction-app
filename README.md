@@ -2,8 +2,9 @@
 
 ### [>>LIVE DEMO<<](https://patikabears-nft-mint-auction.vercel.app/)
 
-<center>
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/iBkUZXmAE48?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center>
+![](demo.gif)
+
+[Demo video on YouTube](https://www.youtube.com/watch?v=iBkUZXmAE48)
 
 Note: This is only a demo. The contract is deployed on the Goerli test network. Therefore, you can mint and create auctions only on the testnet.
 
