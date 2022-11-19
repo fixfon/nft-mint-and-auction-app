@@ -63,21 +63,23 @@ const RefundBid = ({ item }: RefundBidProps) => {
   return (
     <>
       {mounted && !!item && (
-        <div>
-          <button
-            type="button"
-            disabled={
-              isRefundingBid ||
-              !isConnected ||
-              isRefundedBid ||
-              isTxLoading ||
-              !item.isEnded
-            }
-            className="rounded-xl border-2 bg-highlight py-2 px-4 text-lg font-semibold text-neutral transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:bg-opacity-40"
-            onClick={() => refundBidFunction?.()}
-          >
-            {isRefundingBid ? 'Refunding Your Bid...' : 'Refund Your Bid'}
-          </button>
+        <div className="w-full">
+          <div className="flex w-full items-center justify-center">
+            <button
+              type="button"
+              disabled={
+                isRefundingBid ||
+                !isConnected ||
+                isRefundedBid ||
+                isTxLoading ||
+                !item.isEnded
+              }
+              className="rounded-xl border-2 bg-highlight py-2 px-4 text-lg font-semibold text-neutral transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:bg-opacity-40"
+              onClick={() => refundBidFunction?.()}
+            >
+              {isRefundingBid ? 'Refunding Your Bid...' : 'Refund Your Bid'}
+            </button>
+          </div>
           {isTxLoading && (
             <div className="text-lg font-semibold text-highlight">
               Waiting for transaction...

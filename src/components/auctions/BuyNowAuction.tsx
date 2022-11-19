@@ -66,24 +66,26 @@ const BuyNowAuction = ({ item }: BuyNowAuctionProps) => {
   return (
     <>
       {mounted && item && (
-        <div>
-          <button
-            disabled={
-              isBuyNow ||
-              isBoghtNow ||
-              !item ||
-              item.isEnded ||
-              !isConnected ||
-              isTxLoading
-            }
-            onClick={() => buyNowFunction?.()}
-            type="button"
-            className="rounded-xl border-2 bg-highlight py-2 px-4 text-lg font-semibold text-neutral transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:bg-opacity-40"
-          >
-            {isBuyNow ? 'Buying...' : `Buy Now (${item.buyNowPrice} ETH)`}
-          </button>
+        <div className="w-full">
+          <div className="flex w-full items-center justify-center">
+            <button
+              disabled={
+                isBuyNow ||
+                isBoghtNow ||
+                !item ||
+                item.isEnded ||
+                !isConnected ||
+                isTxLoading
+              }
+              onClick={() => buyNowFunction?.()}
+              type="button"
+              className="rounded-xl border-2 bg-highlight py-2 px-4 text-lg font-semibold text-neutral transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:bg-opacity-40"
+            >
+              {isBuyNow ? 'Buying...' : `Buy Now (${item.buyNowPrice} ETH)`}
+            </button>
+          </div>
           {isTxLoading && (
-            <div className="text-lg font-semibold text-green-500">
+            <div className="text-lg font-semibold text-highlight">
               Waiting for transaction...
             </div>
           )}

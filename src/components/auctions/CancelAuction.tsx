@@ -79,23 +79,25 @@ const CancelAuction = ({ item, currentTime }: CancelAuctionProps) => {
   return (
     <>
       {mounted && !!item && (
-        <div>
-          <button
-            type="button"
-            disabled={
-              isCancelingAuction ||
-              !isConnected ||
-              isCanceledAuction ||
-              isTxLoading ||
-              item.isEnded ||
-              moment(item.endAt, 'X').toISOString() <
-                moment(currentTime, 'X').toISOString()
-            }
-            className="rounded-xl border-2 bg-highlight py-2 px-4 text-lg font-semibold text-neutral transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:bg-opacity-40"
-            onClick={() => cancelAuctionFunction?.()}
-          >
-            {isCancelingAuction ? 'Canceling Auction...' : 'Cancel Auction'}
-          </button>
+        <div className="w-full">
+          <div className="flex w-full items-center justify-center">
+            <button
+              type="button"
+              disabled={
+                isCancelingAuction ||
+                !isConnected ||
+                isCanceledAuction ||
+                isTxLoading ||
+                item.isEnded ||
+                moment(item.endAt, 'X').toISOString() <
+                  moment(currentTime, 'X').toISOString()
+              }
+              className="rounded-xl border-2 bg-highlight py-2 px-4 text-lg font-semibold text-neutral transition-transform hover:scale-105 disabled:cursor-not-allowed disabled:bg-opacity-40"
+              onClick={() => cancelAuctionFunction?.()}
+            >
+              {isCancelingAuction ? 'Canceling Auction...' : 'Cancel Auction'}
+            </button>
+          </div>
           {isTxLoading && (
             <div className="text-lg font-semibold text-highlight">
               Waiting for transaction...

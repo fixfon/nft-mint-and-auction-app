@@ -223,22 +223,22 @@ const CreateAuction = ({
             </div>
           )}
           {isApproving && (
-            <p className="text-center text-xl font-semibold text-green-600">
+            <p className="text-center text-xl font-semibold text-highlight">
               Approving Token...
             </p>
           )}
           {isTxApproveLoading && (
-            <p className="text-center text-xl font-semibold text-green-600">
+            <p className="text-center text-xl font-semibold text-highlight">
               Waiting for Approving Transaction...
             </p>
           )}
           {isAuctionCreating && (
-            <p className="text-center text-xl font-semibold text-green-600">
+            <p className="text-center text-xl font-semibold text-highlight">
               Creating Auction...
             </p>
           )}
           {isTxCreateLoading && (
-            <p className="text-center text-xl font-semibold text-green-600">
+            <p className="text-center text-xl font-semibold text-highlight">
               Waiting for Creating Auction Transaction...
             </p>
           )}
