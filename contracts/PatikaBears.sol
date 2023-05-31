@@ -101,9 +101,10 @@ contract PatikaBears is ERC721, ERC721Enumerable, Pausable, Ownable {
   function _beforeTokenTransfer(
     address from,
     address to,
-    uint256 tokenId
+    uint256 tokenId,
+    uint256 batchId
   ) internal override(ERC721, ERC721Enumerable) whenNotPaused {
-    super._beforeTokenTransfer(from, to, tokenId);
+    super._beforeTokenTransfer(from, to, tokenId, batchId);
   }
 
   // ONLY OWNER FUNCTIONS
